@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { ListEmployeeComponent } from './pages/employee/list-employee/list-employee.component';
 import { ItemEmployeeComponent } from './pages/employee/item-employee/item-employee/item-employee.component';
+import { ListCustomerComponent } from './pages/customer/list-customer/list-customer.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { ItemEmployeeComponent } from './pages/employee/item-employee/item-emplo
     AdminLayoutComponent,
     AuthLayoutComponent,
     ListEmployeeComponent,
-    ItemEmployeeComponent
+    ItemEmployeeComponent,
+    ListCustomerComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -20,7 +20,6 @@ export class ListEmployeeComponent implements OnInit {
     
   }
 
-
   ngOnInit(): void {
     this.getEmployeeData();
   }
@@ -36,13 +35,7 @@ export class ListEmployeeComponent implements OnInit {
         // Xử lý lỗi khi không lấy được dữ liệu
       }
     );
-
-
 }
 
-goToDetails() {
-  // Điều hướng tới component chi tiết (điều chỉnh 'details-component' thành đường dẫn và tên component thực tế)
-  this.router.navigate(['/details-component']);
-}
 
 }
