@@ -22,4 +22,8 @@ export class EmployeeService{
     {
         return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/getEmployeeById?idEmployee="+idEmployee);
     }
+    updateEmployee(data:any)
+    {
+        return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/updateEmployee", data);
+    }
 }  
