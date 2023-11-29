@@ -10,7 +10,7 @@ import { EmployeeService } from "src/app/pages/services_API/employee.service";
 import { RoleService } from "src/app/pages/services_API/role.service";
 
 import { ActivatedRoute, Router } from '@angular/router';
-
+import { ChangeDetectorRef } from '@angular/core';
 @Component({
   selector: 'app-item-employee',
   templateUrl: './item-employee.component.html',
@@ -21,15 +21,14 @@ export class ItemEmployeeComponent implements OnInit {
   resEmployee: EmployeeModel
   resRole: RoleModel[]
   response: ResponseModel
-
+  profileImage: string | ArrayBuffer | null = 'https://i.pinimg.com/736x/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg  '; // Hình ảnh mặc định
   constructor(private router: Router, private activatedRoute: ActivatedRoute,private employeeService: EmployeeService, private notificationService: NotificationService,
-    private configService: ConfigService, private roleService: RoleService) { }
+   private roleService: RoleService, private cdRef: ChangeDetectorRef) { }
   ngOnInit(): void {
     this.idEmployee = this.activatedRoute.snapshot.paramMap.get('id')
     this.getEmployeeById();
-    this.getRole();
-    console.log(this.resRole);
-    
+    this.getRole();    
+    this.resRole
   }
   
   getRole(){
@@ -60,8 +59,8 @@ export class ItemEmployeeComponent implements OnInit {
     );
   }
 
-  update(data: any){
-    this.employeeService.updateEmployee(data).subscribe(
+  update(){
+    this.employeeService.updateEmployee(this.resEmployee).subscribe(
       (res) => {
         this.response = res;
         if (res.success == true) 
@@ -77,4 +76,21 @@ export class ItemEmployeeComponent implements OnInit {
       }
     );
   }
+
+  onFileChanged(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        // Cập nhật giá trị của resEmployee.image thành hình ảnh được chọn
+        this.resEmployee.image = reader.result as string;
+  
+        // Kích hoạt change detection để cập nhật template
+        this.cdRef.detectChanges();
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  
 }
