@@ -11,6 +11,7 @@ import { RoleService } from "src/app/pages/services_API/role.service";
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core';
+import {CloudinaryModule} from '@cloudinary/ng';
 @Component({
   selector: 'app-item-employee',
   templateUrl: './item-employee.component.html',
@@ -60,7 +61,13 @@ export class ItemEmployeeComponent implements OnInit {
   }
 
   update(){
-    this.employeeService.updateEmployee(this.resEmployee).subscribe(
+    let formData = new FormData()
+    formData.append('file', this.fileSave)
+    formData.append('resEmployeeData', JSON.stringify(this.resEmployee));
+
+    console.log(formData);
+    
+    this.employeeService.updateEmployee(formData).subscribe(
       (res) => {
         this.response = res;
         if (res.success == true) 
@@ -77,17 +84,16 @@ export class ItemEmployeeComponent implements OnInit {
     );
   }
 
-  onFileChanged(event: Event) {
+  fileSave: any
+  onFileChanged(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
       const reader = new FileReader();
+      this.fileSave = file
       reader.onload = () => {
         // Cập nhật giá trị của resEmployee.image thành hình ảnh được chọn
         this.resEmployee.image = reader.result as string;
-  
-        // Kích hoạt change detection để cập nhật template
-        this.cdRef.detectChanges();
       };
       reader.readAsDataURL(file);
     }
