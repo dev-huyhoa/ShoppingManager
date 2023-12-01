@@ -4,4 +4,5 @@ export interface ResponseModel{
   data: any
   notification: NotificationModel
   success: boolean
+  message: any
 }

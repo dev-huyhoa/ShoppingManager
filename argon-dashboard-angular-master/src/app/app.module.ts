@@ -16,11 +16,14 @@ import { ComponentsModule } from './components/components.module';
 import { ListEmployeeComponent } from './pages/employee/list-employee/list-employee.component';
 import { ItemEmployeeComponent } from './pages/employee/item-employee/item-employee/item-employee.component';
 import { ListCustomerComponent } from './pages/customer/list-customer/list-customer.component';
+import { CommonModule } from '@angular/common';
 
 
 @NgModule({
   imports: [
-    BrowserAnimationsModule,
+    CommonModule,
+    BrowserAnimationsModule, // required animations module
+    ToastrModule.forRoot(),
     FormsModule,
     HttpClientModule,
     ComponentsModule,

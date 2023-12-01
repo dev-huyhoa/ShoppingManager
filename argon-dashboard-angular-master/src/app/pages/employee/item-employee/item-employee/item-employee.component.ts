@@ -8,10 +8,8 @@ import { RoleModel} from "src/app/model/role.model";
 import { HttpClient } from "@angular/common/http";
 import { EmployeeService } from "src/app/pages/services_API/employee.service";
 import { RoleService } from "src/app/pages/services_API/role.service";
-
+import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ChangeDetectorRef } from '@angular/core';
-import {CloudinaryModule} from '@cloudinary/ng';
 @Component({
   selector: 'app-item-employee',
   templateUrl: './item-employee.component.html',
@@ -22,9 +20,10 @@ export class ItemEmployeeComponent implements OnInit {
   resEmployee: EmployeeModel
   resRole: RoleModel[]
   response: ResponseModel
+  image: any
   profileImage: string | ArrayBuffer | null = 'https://i.pinimg.com/736x/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg  '; // Hình ảnh mặc định
   constructor(private router: Router, private activatedRoute: ActivatedRoute,private employeeService: EmployeeService, private notificationService: NotificationService,
-   private roleService: RoleService, private cdRef: ChangeDetectorRef) { }
+   private roleService: RoleService, private configService: ConfigService, private toastr: ToastrService) { }
   ngOnInit(): void {
     this.idEmployee = this.activatedRoute.snapshot.paramMap.get('id')
     this.getEmployeeById();
@@ -37,51 +36,72 @@ export class ItemEmployeeComponent implements OnInit {
       (res) => {
         this.response = res;      
         this.resRole = this.response.data;
-        console.log(this.resRole,"role");
 
       },
       (error) => {
-        // Xử lý lỗi khi không lấy được dữ liệu
+        this.toastr.error(error);          
       }
     );
   }
 
-  getEmployeeById(){
-    
+  getEmployeeById(){  
     this.employeeService.getEmployeeById(this.idEmployee).subscribe(
       (res) => {
         this.response = res;      
         this.resEmployee = this.response.data;
+        this.image = this.resEmployee.image
         console.log(this.resEmployee.nameEmployee,"dataget");
       },
       (error) => {
-        // Xử lý lỗi khi không lấy được dữ liệu
+        this.toastr.error(error);          
       }
     );
   }
 
   update(){
-    let formData = new FormData()
-    formData.append('file', this.fileSave)
-    formData.append('resEmployeeData', JSON.stringify(this.resEmployee));
-
-    console.log(formData);
+    let formData = new FormData()   
+    if(this.fileSave)
+    {
+      formData.append('resEmployeeData', JSON.stringify(this.resEmployee));
+      console.log(this.fileSave,"fileSave");
+      formData.append('file', this.fileSave)
+      this.employeeService.update(formData).subscribe(
+        (res) => {
+          this.response = res;
+          if (res.success == true) 
+          {
+            this.toastr.success(res.message);  
+            this.router.navigate(['','list-employee']);        
+          }
+          else {
+            this.toastr.error(res.message);          
+          }
+        },
+        (error) => {
+          this.toastr.error(error);          
+        }
+      );
+    }
+    else{
+      this.employeeService.updateEmployee(this.resEmployee).subscribe(
+        (res) => {
+          this.response = res;
+          if (res.success == true) 
+          {
+            this.toastr.success(res.message);     
+            this.router.navigate(['','list-employee']);             
+          }
+          else {
+            this.toastr.error(res.message);          
+          }
+        },
+        (error) => {
+          this.toastr.error(error);          
+        }
+      );
+    }
+   
     
-    this.employeeService.updateEmployee(formData).subscribe(
-      (res) => {
-        this.response = res;
-        if (res.success == true) 
-        {
-            alert("Sửa thông tin thành công")
-        }
-        else {
-          alert("Thất bại")
-        }
-      },
-      (error) => {
-        // Xử lý lỗi khi không lấy được dữ liệu
-      }
-    );
   }
 
   fileSave: any
@@ -93,9 +113,9 @@ export class ItemEmployeeComponent implements OnInit {
       this.fileSave = file
       reader.onload = () => {
         // Cập nhật giá trị của resEmployee.image thành hình ảnh được chọn
-        this.resEmployee.image = reader.result as string;
+        this.image = reader.result as string;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(this.fileSave);
     }
   }
   

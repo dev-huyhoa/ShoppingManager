@@ -99,6 +99,7 @@
       <div class="card shadow">
         <div class="card-header border-0">
           <h3 class="mb-0">Nhân Viên</h3>
+          <button>Nhân Viên</button>
         </div>
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
@@ -128,7 +129,7 @@
                   {{ item.phone }}
                 </td>
                 <td>
-                  <span class="badge badge-dot mr-4" [ngClass]="{ 'bg-warning': item.status === 0, 'bg-success': item.status === 1 }">
+                  <span class="badge badge-dot mr-4">
                     {{ item.status === 1 ? 'Kích hoạt' : 'Chưa kích hoạt' }}
                 </span>
                 </td>
