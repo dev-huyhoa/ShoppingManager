@@ -17,6 +17,9 @@ import { ListEmployeeComponent } from './pages/employee/list-employee/list-emplo
 import { ItemEmployeeComponent } from './pages/employee/item-employee/item-employee/item-employee.component';
 import { ListCustomerComponent } from './pages/customer/list-customer/list-customer.component';
 import { CommonModule } from '@angular/common';
+import { ListRoleComponent } from './pages/role/list-role/list-role.component';
+import { ItemRoleComponent } from './pages/role/item-role/item-role.component';
+import { SearchPipe } from './search/search.pipe';
 
 
 @NgModule({
@@ -44,7 +47,10 @@ import { CommonModule } from '@angular/common';
     AuthLayoutComponent,
     ListEmployeeComponent,
     ItemEmployeeComponent,
-    ListCustomerComponent
+    ListCustomerComponent,
+    ListRoleComponent,
+    ItemRoleComponent,
+    SearchPipe
   ],
   providers: [],
   bootstrap: [AppComponent]

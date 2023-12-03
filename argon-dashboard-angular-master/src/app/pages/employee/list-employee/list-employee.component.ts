@@ -16,11 +16,14 @@ export class ListEmployeeComponent implements OnInit {
   resEmployee: EmployeeModel[]
   response: ResponseModel
   data: EmployeeModel
+  searchText = ''
   constructor(private employeeService: EmployeeService, private router: Router) { 
     
   }
 
   ngOnInit(): void {
+    console.log(this.resEmployee);
+    
     this.getEmployeeData();
   }
 

@@ -22,12 +22,16 @@ export class EmployeeService{
     {
         return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Employee/getEmployeeById?idEmployee="+idEmployee);
     }
-    updateEmployee(data:any)
+    updateEmp(data:any)
     {
         return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/updateEmployee", data);
     }
-    update(file:any)
+    updateEmpImg(file:any)
     {
         return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/updateEmpImg", file);
+    }
+    create(data:any)
+    {
+        return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Employee/createEmployee", data);
     }
 }  

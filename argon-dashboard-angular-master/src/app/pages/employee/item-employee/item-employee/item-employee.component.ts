@@ -10,6 +10,7 @@ import { EmployeeService } from "src/app/pages/services_API/employee.service";
 import { RoleService } from "src/app/pages/services_API/role.service";
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
+
 @Component({
   selector: 'app-item-employee',
   templateUrl: './item-employee.component.html',
@@ -18,72 +19,111 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ItemEmployeeComponent implements OnInit {
   idEmployee: any
   resEmployee: EmployeeModel
+  resEmployeeTmp: EmployeeModel
   resRole: RoleModel[]
   response: ResponseModel
   image: any
+  type: any
   profileImage: string | ArrayBuffer | null = 'https://i.pinimg.com/736x/c6/e5/65/c6e56503cfdd87da299f72dc416023d4.jpg  '; // Hình ảnh mặc định
   constructor(private router: Router, private activatedRoute: ActivatedRoute,private employeeService: EmployeeService, private notificationService: NotificationService,
    private roleService: RoleService, private configService: ConfigService, private toastr: ToastrService) { }
   ngOnInit(): void {
-    this.idEmployee = this.activatedRoute.snapshot.paramMap.get('id')
-    this.getEmployeeById();
-    this.getRole();    
-    this.resRole
+    this.idEmployee = this.activatedRoute.snapshot.paramMap.get('id2')
+    this.type = this.activatedRoute.snapshot.paramMap.get('id1')
+
+    this.init();  
+    this.roleService.views().then(response =>{
+      this.resRole = response
+    })
   }
   
-  getRole(){
-    this.roleService.gets().subscribe(
-      (res) => {
-        this.response = res;      
-        this.resRole = this.response.data;
-
-      },
-      (error) => {
-        this.toastr.error(error);          
-      }
-    );
-  }
-
-  getEmployeeById(){  
-    this.employeeService.getEmployeeById(this.idEmployee).subscribe(
-      (res) => {
-        this.response = res;      
-        this.resEmployee = this.response.data;
-        this.image = this.resEmployee.image
-        console.log(this.resEmployee.nameEmployee,"dataget");
-      },
-      (error) => {
-        this.toastr.error(error);          
-      }
-    );
-  }
-
-  update(){
-    let formData = new FormData()   
-    if(this.fileSave)
-    {
-      formData.append('resEmployeeData', JSON.stringify(this.resEmployee));
-      console.log(this.fileSave,"fileSave");
-      formData.append('file', this.fileSave)
-      this.employeeService.update(formData).subscribe(
+  init(){  
+    if(this.type == 'detail'){
+      this.employeeService.getEmployeeById(this.idEmployee).subscribe(
         (res) => {
-          this.response = res;
-          if (res.success == true) 
-          {
-            this.toastr.success(res.message);  
-            this.router.navigate(['','list-employee']);        
+          this.response = res;      
+          this.resEmployee = this.response.data;
+          if (this.resEmployee.image) {
+            // this.img = this.configService.apiUrl + this.resEmployee.image
+            this.image = this.resEmployee.image
           }
           else {
-            this.toastr.error(res.message);          
+            this.image = " src/assets/img/employees/unknown.png"
           }
         },
         (error) => {
           this.toastr.error(error);          
         }
-      );
+      )
+    }
+    else {
+      this.resEmployee = new EmployeeModel
+      this.resEmployeeTmp = Object.assign({}, this.resEmployee)
+      if(this.resEmployee){
+
+        if (this.resEmployee.image) {
+         // this.img = this.configService.apiUrl + this.resEmployee.image
+         this.image = this.resEmployee.image
+        }
+        else{
+          this.image = "../../../../assets/img/employees/unknown.png"
+        }
+      }
+    }
+
+  }
+
+  update(){
+    let formData = new FormData()   
+    if(this.fileSave)
+    {   
+      if(this.type == 'create'){
+        this.resEmployee.image = this.image
+        formData.append('resEmployeeData', JSON.stringify(this.resEmployee));
+        formData.append('file', this.fileSave)
+        this.employeeService.create(formData).subscribe(
+          (res) => {
+            this.response = res;
+            if (res.success == true) 
+            {
+              this.toastr.success(res.message);  
+              this.router.navigate(['','list-employee']);        
+            }
+            else {
+              this.toastr.error(res.message);          
+            }
+          },
+          (error) => {
+            this.toastr.error(error);          
+          }
+        )
+      }
+      else {
+        this.resEmployee.image = this.image
+        formData.append('resEmployeeData', JSON.stringify(this.resEmployee));
+        console.log(this.fileSave,"fileSave");
+        formData.append('file', this.fileSave)
+        this.employeeService.updateEmpImg(formData).subscribe(
+          (res) => {
+            this.response = res;
+            if (res.success == true) 
+            {
+              this.toastr.success(res.message);  
+              this.router.navigate(['','list-employee']);        
+            }
+            else {
+              this.toastr.error(res.message);          
+            }
+          },
+          (error) => {
+            this.toastr.error(error);          
+          }
+        )
+      }
+
     }
     else{
-      this.employeeService.updateEmployee(this.resEmployee).subscribe(
+      this.employeeService.updateEmp(this.resEmployee).subscribe(
         (res) => {
           this.response = res;
           if (res.success == true) 
