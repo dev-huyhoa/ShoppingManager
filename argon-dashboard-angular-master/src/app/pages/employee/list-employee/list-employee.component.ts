@@ -7,15 +7,20 @@ import { ResponseModel } from "src/app/model/responsiveModels/response.model";
 import { AuthenticationModel } from 'src/app/model/authentication.model';
 import { PaginationInstance } from 'ngx-pagination'; // Import thư viện phân trang
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-list-employee',
   templateUrl: './list-employee.component.html',
   styleUrls: ['./list-employee.component.scss']
 })
 export class ListEmployeeComponent implements OnInit {
+  @ViewChild('closeModalLoadRestore') closeModalLoadRestore: ElementRef;
   resEmployee: EmployeeModel[]
   response: ResponseModel
   data: EmployeeModel
+  resEmployeeTemp: EmployeeModel
   searchText = ''
   p: number = 1;
   title = 'pagination';
@@ -24,13 +29,14 @@ export class ListEmployeeComponent implements OnInit {
   count: number = 0
   tableSize: number = 5;
   tableSizes: any = [5, 10, 15, 20]
-  constructor(private employeeService: EmployeeService, private router: Router) { 
+  @ViewChild('myModal') myModal: ElementRef;
+  constructor(private employeeService: EmployeeService, private router: Router, private toastr: ToastrService,
+    private modalService: NgbModal,
+   ) { 
     
   }
 
   ngOnInit(): void {
-    console.log(this.resEmployee);
-    
     this.getEmployeeData();
   }
 
@@ -39,10 +45,9 @@ export class ListEmployeeComponent implements OnInit {
       (res) => {
         this.response = res;
         this.resEmployee = this.response.data;
-        console.log(this.resEmployee);
       },
       (error) => {
-        // Xử lý lỗi khi không lấy được dữ liệu
+        this.toastr.error(error);          
       }
     );
 }
@@ -56,6 +61,40 @@ onTableSizeChange(event: any): void {
   this.tableSize = event.target.value
   this.page = 1
   this.getEmployeeData();
+}
+
+delete(){
+  this.employeeService.delete(this.resEmployeeTemp.idEmployee).subscribe(
+    (res) => {
+      this.response = res;
+      if (res.success == true) 
+      {
+        this.toastr.success(res.message);  
+        this.getEmployeeData()
+        /// giờ gọi routing, chuyển lại tới trang thì dễ r =)) mà nó load lại nhìn sao sao á
+        // nãy gọi t test, gọi lại cũng k sao đâu
+        setTimeout(() => {
+          this.closeModalLoadRestore.nativeElement.click()
+         }, 100);
+      }
+      else {
+        this.toastr.error(res.message);          
+      }
+    },
+    (error) => {
+      this.toastr.error(error);          
+    }
+  );
+}
+
+getDataRow(value: any){
+  this.resEmployeeTemp = value
+  console.log(value);
+}
+isAction: boolean = false;
+closeModal() {
+
+  
 }
 
 }

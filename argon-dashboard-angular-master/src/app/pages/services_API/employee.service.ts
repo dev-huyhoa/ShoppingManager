@@ -38,4 +38,5 @@ export class EmployeeService{
     {
         return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Employee/deleteEmployee?idEmployee="+idEmployee);
     }
+    
 }  

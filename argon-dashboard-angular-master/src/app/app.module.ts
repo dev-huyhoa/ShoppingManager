@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
 import { ListRoleComponent } from './pages/role/list-role/list-role.component';
 import { ItemRoleComponent } from './pages/role/item-role/item-role.component';
 import { SearchPipe } from './search/search.pipe';
-
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -52,7 +52,7 @@ import { SearchPipe } from './search/search.pipe';
     ItemRoleComponent,
     SearchPipe
   ],
-  providers: [],
+  providers: [NgbActiveModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
