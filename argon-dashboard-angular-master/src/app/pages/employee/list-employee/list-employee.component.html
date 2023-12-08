@@ -1,7 +1,7 @@
 <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
   <div class="container-fluid">
     <div class="header-body">
-      <!-- Card stats -->
+       Card stats
       <div class="row">
         <div class="col-xl-3 col-lg-6">
           <div class="card card-stats mb-4 mb-xl-0">
@@ -90,7 +90,7 @@
       </div>
     </div>
   </div>
-</div>
+</div> 
 <!-- Page content -->
 <div class="container-fluid mt--7">
   <!-- Table -->
@@ -160,42 +160,25 @@
             </pagination-controls>
           </div>
         </ul>
-          <!-- <div class="div">
+          <div class="div">
             <select (change)="onTableSizeChange($event)">
             <option *ngFor="let size of tableSizes">
             {{size}}</option>
             </select>
-          </div> -->
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Modal -->
-<!-- <div #myModal class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="staticBackdropLabel">Thông báo</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        Bạn có chắc muốn xóa
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal">Đóng</button>
-        <button type="button" class="btn btn-danger" (click)="delete()">Xác nhận</button>
-      </div>
-    </div>
-  </div>
-</div> -->
+
 <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="restoreEmployeeModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="restoreEmployeeModalLabel">Xác nhận</h1>
-        <button type="button"  #closeModalLoadRestore class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+        <button type="button"  #closeModalDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
       </div>
       <div class="modal-body" *ngIf="resEmployeeTemp">
         Bạn có chắc muốn xóa [<span class="text-red">{{resEmployeeTemp.nameEmployee}}</span>] !
@@ -207,4 +190,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> 

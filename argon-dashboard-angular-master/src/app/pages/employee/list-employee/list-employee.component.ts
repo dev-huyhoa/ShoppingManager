@@ -16,12 +16,12 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./list-employee.component.scss']
 })
 export class ListEmployeeComponent implements OnInit {
-  @ViewChild('closeModalLoadRestore') closeModalLoadRestore: ElementRef;
+  @ViewChild('closeModalDelete') closeModalDelete: ElementRef;
   resEmployee: EmployeeModel[]
   response: ResponseModel
   data: EmployeeModel
   resEmployeeTemp: EmployeeModel
-  searchText = ''
+  searchText : any = ''
   p: number = 1;
   title = 'pagination';
   POSTS: any
@@ -30,8 +30,11 @@ export class ListEmployeeComponent implements OnInit {
   tableSize: number = 5;
   tableSizes: any = [5, 10, 15, 20]
   @ViewChild('myModal') myModal: ElementRef;
-  constructor(private employeeService: EmployeeService, private router: Router, private toastr: ToastrService,
-    private modalService: NgbModal,
+  constructor(
+    private employeeService: EmployeeService, 
+    private router: Router, 
+    private toastr: ToastrService,
+    private modalService: NgbModal, 
    ) { 
     
   }
@@ -71,10 +74,8 @@ delete(){
       {
         this.toastr.success(res.message);  
         this.getEmployeeData()
-        /// giờ gọi routing, chuyển lại tới trang thì dễ r =)) mà nó load lại nhìn sao sao á
-        // nãy gọi t test, gọi lại cũng k sao đâu
         setTimeout(() => {
-          this.closeModalLoadRestore.nativeElement.click()
+          this.closeModalDelete.nativeElement.click()
          }, 100);
       }
       else {

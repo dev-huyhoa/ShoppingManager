@@ -17,6 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./item-employee.component.scss']
 })
 export class ItemEmployeeComponent implements OnInit {
+  @ViewChild('closeModalDelete') closeModalDelete: ElementRef;
   idEmployee: any
   resEmployee: EmployeeModel
   resEmployeeTmp: EmployeeModel
@@ -109,7 +110,7 @@ export class ItemEmployeeComponent implements OnInit {
             if (res.success == true) 
             {
               this.toastr.success(res.message);  
-              this.router.navigate(['','list-employee']);        
+              // this.router.navigate(['','list-employee']);        
             }
             else {
               this.toastr.error(res.message);          
@@ -159,4 +160,28 @@ export class ItemEmployeeComponent implements OnInit {
     }
   }
   
+  delete(){
+    this.employeeService.delete(this.idEmployee).subscribe(
+      (res) => {
+        this.response = res;
+        if (res.success == true) 
+        {
+          this.toastr.success(res.message);  
+          this.closeModalDelete.nativeElement.click()       
+          setTimeout(() => {
+           this.router.navigate(['','list-employee']);    
+        }, 100); 
+
+        }
+        else {
+          this.toastr.error(res.message);          
+        }
+      },
+      (error) => {
+        this.toastr.error(error);          
+      }
+    );
+  }
+
+
 }
