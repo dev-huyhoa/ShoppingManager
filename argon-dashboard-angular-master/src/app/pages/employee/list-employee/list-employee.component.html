@@ -110,7 +110,7 @@
                 <th scope="col">Điện Thoại</th>
                 <th scope="col">Trạng thái</th>
                 <th scope="col">
-                  <button type="button" class="btn btn-success" [routerLink]="['/item-employee','create','new']">Thêm mới</button>
+                  <button type="button" class="btn btn-success" [routerLink]="['/item-employee','create','new']" style="float: right;">Thêm mới</button>
                 </th>
               </tr>
             </thead>
@@ -152,19 +152,18 @@
           </table>
         </div>
 
-        <div class="card-footer py-4">        
-          <ul class="pagination justify-content-end mb-0">
-          <div class="py-5 flex justify-center item-center">
-            <pagination-controls previousLabel="Prev"
-            nextLabel="Next" (pageChange)="onTableDataChange($event)">
-            </pagination-controls>
-          </div>
-        </ul>
-          <div class="div">
-            <select (change)="onTableSizeChange($event)">
-            <option *ngFor="let size of tableSizes">
-            {{size}}</option>
-            </select>
+        <div class="container">
+          <div class="card-footer py-4">
+            <div class="row">
+              <div class="col-6">
+                <ul class="pagination justify-content-end mb-0">
+                  <div class="py-5 flex justify-center item-center">
+                    <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                    </pagination-controls>
+                  </div>
+                </ul>
+              </div>     
+            </div>
           </div>
         </div>
       </div>

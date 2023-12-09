@@ -1,10 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef} from '@angular/core';
 import { RoleService } from "src/app/pages/services_API/role.service";
-import { NotificationService } from "src/app/pages/services_API/notification.service";
-import { EmployeeModel} from "src/app/model/employee.model";
-import { ConfigService } from "src/app/pages/services_API/config.service";
 import { ResponseModel } from "src/app/model/responsiveModels/response.model";
-import { AuthenticationModel } from 'src/app/model/authentication.model';
 import { PaginationInstance } from 'ngx-pagination'; // Import thư viện phân trang
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -31,12 +27,12 @@ export class ListRoleComponent implements OnInit {
   count: number = 0
   tableSize: number = 5;
   tableSizes: any = [5, 10, 15, 20]
+  typeChild: string
+  dataChild: RoleModel
   @ViewChild('myModal') myModal: ElementRef;
   constructor(
     private roleService: RoleService, 
-    private router: Router, 
     private toastr: ToastrService,
-    private modalService: NgbModal, 
    ) { }
 
    ngOnInit(): void {
@@ -89,7 +85,20 @@ delete(){
 
 getDataRow(value: any){
   this.resRoleTemp = value
-  console.log(value);
 }
-isAction: boolean = false;
+
+childTypeData(type:any, value: any = null){
+  if (type) {
+    this.typeChild = type
+  }
+  if (value) {
+    this.dataChild = Object.assign({}, value)
+  }
+}
+
+// childData(value: any){
+//   if (value) {
+//     this.dataChild = Object.assign({}, value)
+//   }
+// }
 }

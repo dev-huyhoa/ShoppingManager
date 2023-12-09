@@ -106,11 +106,9 @@
                 <tr>
                   <th scope="col">Id</th>
                   <th scope="col">Tên</th>
-                  <th scope="col">Miêu tả</th>
-                  <th scope="col">Trạng thái</th>
-                  <th scope="col"></th>
+                  <th scope="col">Mô tả</th>
                   <th scope="col">
-                    <button type="button" class="btn btn-success" [routerLink]="['/item-employee','create','new']">Thêm mới</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="childTypeData('create')" style="float: right;">Thêm mới</button>
                   </th>
                 </tr>
               </thead>
@@ -130,20 +128,14 @@
                   <td>
                     {{ item.description }}
                   </td>
-                  <td>
-                    {{ item.status }}
-                  </td>
-                  <td>
-                    <!-- {{ item.isDelete }}  -->
-                  </td>
                   <td class="text-right">
                     <div style="position: static !important" ngbDropdown placement="top-right">
                       <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
                         <i class="fas fa-ellipsis-v"></i>
                       </a>
                       <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                        <button class="dropdown-item" [routerLink]="['/item-employee','detail',item.idEmployee]">Chi Tiết</button>
-                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="getDataRow(item)">Xóa</button>
+                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="childTypeData('detail',item)">Chi Tiết</button>
+                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal"(click)="getDataRow(item)">Xóa</button>
                       </div>
                     </div>
                   </td>
@@ -152,92 +144,31 @@
             </table>
           </div>
   
-          <!-- <div class="card-footer py-4">        
-            <ul class="pagination justify-content-end mb-0">
-            <div class="py-5 flex justify-center item-center">
-              <pagination-controls previousLabel="Prev"
-              nextLabel="Next" (pageChange)="onTableDataChange($event)">
-              </pagination-controls>
-            </div>
-          </ul>
-            <div class="div">
-              <select (change)="onTableSizeChange($event)">
-              <option *ngFor="let size of tableSizes">
-              {{size}}</option>
-              </select>
+          <div class="container">
+            <div class="card-footer py-4">
+              <div class="row">
+                <div class="col-6">
+                  <ul class="pagination justify-content-end mb-0">
+                    <div class="py-5 flex justify-center item-center">
+                      <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onTableDataChange($event)">
+                      </pagination-controls>
+                    </div>
+                  </ul>
+                </div>     
+              </div>
             </div>
           </div>
+          
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
   
   
-  <div class="modal fade" id="UpdateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="restoreEmployeeModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="restoreEmployeeModalLabel">Xác nhận</h1>
-          <button type="button"  #closeModalDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
-        </div>
-        <div class="modal-body" *ngIf="resRoleTemp">
-            <form>
-                <h6 class="heading-small text-muted mb-4">Thông tin cá nhân</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-username">Họ và tên</label>
-                        <input [(ngModel)]="resEmployee.nameEmployee" name="nameEmployee" type="text" id="nameEmployee" class="form-control form-control-alternative" placeholder="Nhập họ tên" >
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group" *ngIf="resRole">
-                        <label class="form-control-label" for="input-email">Chức vụ</label>
-                        <select class="form-control" [(ngModel)]="resEmployee.roleId">
-                          <option *ngFor="let role of resRole" [ngValue]="role.idRole">{{ role.nameRole }}</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <hr class="my-4" />
-                <!-- Address -->
-                <h6 class="heading-small text-muted mb-4">Thông tin liên lạc</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-city">Điện thoại</label>
-                        <input [(ngModel)]="resEmployee.phone" name="phone" type="text" id="phone" class="form-control form-control-alternative" placeholder="Nhập điện thoại">
-                      </div>
-                    </div>
-                    <div class="col-lg-6">
-                      <div class="form-group">
-                        <label class="form-control-label" for="input-country">Email</label>
-                        <input [(ngModel)]="resEmployee.email" name="email" type="email" id="email" class="form-control form-control-alternative" placeholder="Nhập email">
-                      </div>
-                    </div>    
-                  </div>
-                </div>
-                <div class="pl-lg-4">
-                  <div class="form-group">
-                    <label>Địa chỉ</label>
-                    <textarea [(ngModel)]="resEmployee.address" id="address"  name="address" rows="4" class="form-control form-control-alternative" placeholder="Nhập địa chỉ">
-                  </textarea> 
-                  </div>
-                </div>
-                <div _ngcontent-lbx-c149="" class="col-12 text-right" style="position: absolute; bottom: 10px; right: 10px;">
-                  <button _ngcontent-lbx-c149="" data-bs-toggle="modal" data-bs-target="#deleteModal" class="btn btn-sm btn-danger ng-star-inserted">Xóa</button>
-                  <button _ngcontent-lbx-c149="" class="btn btn-sm btn-success ng-star-inserted" (click)="update()">Lưu</button>
-                </div>
-              </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" (click)="delete()">Xóa         
-          </button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Không</button>
-        </div>
+  <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">   
+        <app-item-role [resRole]="dataChild" [type]="typeChild"></app-item-role>
       </div>
     </div>
   </div> 
@@ -251,7 +182,7 @@
           <button type="button"  #closeModalDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
         </div>
         <div class="modal-body" *ngIf="resRoleTemp">
-          Bạn có chắc muốn xóa
+          Bạn có chắc muốn xóa [<span class="text-red">{{resRoleTemp.nameRole}}</span>] !
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-danger" (click)="delete()">Xóa         

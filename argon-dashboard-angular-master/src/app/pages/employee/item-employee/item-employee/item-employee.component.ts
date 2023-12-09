@@ -74,7 +74,7 @@ export class ItemEmployeeComponent implements OnInit {
 
   }
 
-  update(){
+  save(){
     let formData = new FormData()   
     if(this.fileSave)
     {   
