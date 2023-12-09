@@ -21,6 +21,8 @@ import { ListRoleComponent } from './pages/role/list-role/list-role.component';
 import { ItemRoleComponent } from './pages/role/item-role/item-role.component';
 import { SearchPipe } from './search/search.pipe';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ItemCategoryComponent } from './pages/category/item-category/item-category.component';
+import { ListCategoryComponent } from './pages/category/list-category/list-category.component';
 
 @NgModule({
   imports: [
@@ -50,7 +52,9 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
     ListCustomerComponent,
     ListRoleComponent,
     ItemRoleComponent,
-    SearchPipe
+    SearchPipe,
+    ItemCategoryComponent,
+    ListCategoryComponent
   ],
   providers: [NgbActiveModal],
   bootstrap: [AppComponent]

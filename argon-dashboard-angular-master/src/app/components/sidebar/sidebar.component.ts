@@ -18,6 +18,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-employee', title: 'Nhân viên',  icon:'ni ni-circle-08 text-purple', class: '' },
     { path: '/list-customer', title: 'Khách Hàng',  icon:'ni ni-single-02 text-purple', class: '' },
     { path: '/list-role', title: 'Chức vụ',  icon:'fa-solid fa-key text-purple', class: '' },
+    { path: '/list-category', title: 'Danh Mục',  icon:'fa-solid fa-list text-purple', class: '' },
     { path: '/list-banner', title: 'Banner',  icon:'ni ni-image text-purple', class: '' }
 
 

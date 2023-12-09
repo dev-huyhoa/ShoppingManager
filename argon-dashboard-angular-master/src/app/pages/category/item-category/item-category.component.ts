@@ -1,32 +1,31 @@
 import { Component, OnInit, Output, Input,ViewChild, ElementRef} from '@angular/core';
-import { RoleModel } from 'src/app/model/role.model';
-import { RoleService } from "src/app/pages/services_API/role.service";
+import { CategoryModel } from 'src/app/model/category.model';
+import { CategoryService } from "src/app/pages/services_API/category.service";
 import { ConfigService } from "src/app/pages/services_API/config.service";
 import { ResponseModel } from "src/app/model/responsiveModels/response.model";
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ListRoleComponent } from 'src/app/pages/role/list-role/list-role.component';
+import { Router } from '@angular/router';
+import { ListCategoryComponent } from 'src/app/pages/category/list-category/list-category.component';
 
 @Component({
-  selector: 'app-item-role',
-  templateUrl: './item-role.component.html',
-  styleUrls: ['./item-role.component.scss']
+  selector: 'app-item-category',
+  templateUrl: './item-category.component.html',
+  styleUrls: ['./item-category.component.scss']
 })
-export class ItemRoleComponent implements OnInit {
-  @Input() resRole: RoleModel
+export class ItemCategoryComponent implements OnInit {
+  @Input() resCategory: CategoryModel
   @Input() type: string
-  resRoleTmp: RoleModel
+  resCategoryTmp: CategoryModel
   isChange: boolean = false
   response: ResponseModel
 
   @ViewChild('closeModal') closeModal: ElementRef
   @ViewChild('closeModalDelete') closeModalDelete: ElementRef
-
   constructor(
-    private roleService: RoleService, 
+    private categoryService: CategoryService, 
     private toastr: ToastrService,
     private router: Router,
-    private listRoleComponent: ListRoleComponent
+    private listCategoryComponent: ListCategoryComponent
   ) { }
 
   ngOnInit(): void {    
@@ -34,14 +33,15 @@ export class ItemRoleComponent implements OnInit {
 
   ngOnChanges(): void {
     if (this.type == "create") {
-     this.resRole = new RoleModel()
-     this.resRoleTmp = Object.assign({}, this.resRole)
+     this.resCategory= new CategoryModel()
+     this.resCategoryTmp = Object.assign({}, this.resCategory)
+
     }
-    this.resRoleTmp = Object.assign({}, this.resRole)  
+    this.resCategoryTmp = Object.assign({}, this.resCategory)  
   }
 
   inputChange(){
-    if (JSON.stringify(this.resRole) != JSON.stringify(this.resRoleTmp)) {
+    if (JSON.stringify(this.resCategory) != JSON.stringify(this.resCategoryTmp)) {
       this.isChange = true
     }
     else{
@@ -51,16 +51,14 @@ export class ItemRoleComponent implements OnInit {
 
  save(){
   if (this.type == 'create') {
-    this.roleService.create(this.resRole).subscribe(
+    this.categoryService.create(this.resCategory).subscribe(
       (res) => {
         this.response = res;
         if (res.success == true) 
         {
           this.toastr.success(res.message);  
           this.closeModal.nativeElement.click()       
-          setTimeout(() => {
-           this.router.navigate(['','list-role']);    
-        }, 100); 
+          this.listCategoryComponent.ngOnInit()
 
         }
         else {
@@ -73,15 +71,14 @@ export class ItemRoleComponent implements OnInit {
     )
   }
   else{
-    this.roleService.update(this.resRole).subscribe(
+    this.categoryService.update(this.resCategory).subscribe(
       (res) => {
         this.response = res;
         if (res.success == true) 
         {
           this.toastr.success(res.message);  
           this.closeModal.nativeElement.click()       
-          this.listRoleComponent.ngOnInit()
-
+          this.listCategoryComponent.ngOnInit()
         }
         else {
           this.toastr.error(res.message);          
@@ -95,14 +92,14 @@ export class ItemRoleComponent implements OnInit {
  }
 
  delete(){
-  this.roleService.delete(this.resRole.idRole).subscribe(
+  this.categoryService.delete(this.resCategory.idCategory).subscribe(
     (res) => {
       this.response = res;
       if (res.success == true) 
       {
         this.toastr.success(res.message);  
         this.closeModalDelete.nativeElement.click()       
-        this.listRoleComponent.ngOnInit()
+        this.listCategoryComponent.ngOnInit()
       }
       else {
         this.toastr.error(res.message);          

@@ -104,33 +104,29 @@
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
+                  <th scope="col">Id</th>
                   <th scope="col">Tên</th>
-                  <th scope="col">Email</th>
-                  <th scope="col">Điện thoại</th>
-                  <th scope="col">Địa chỉ</th>
+                  <th scope="col">Mô tả</th>
                   <th scope="col">
-                    <!-- <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="childTypeData('create')" style="float: right;">Thêm mới</button> -->
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="childTypeData('create')" style="float: right;">Thêm mới</button>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let item of resCustomer | search: searchText | paginate: {itemsPerPage: tableSize, 
+                <tr *ngFor="let item of resCategory | search: searchText | paginate: {itemsPerPage: tableSize, 
                                                                                       currentPage: page, 
                                                                                       totalItems: count}; let i = index">
                   <!-- <th scope="row">
                     {{ item.idEmployee }}
                   </th> -->
                   <td>
-                    {{ item.nameCustomer }}
+                    {{ item.idCategory }}
                   </td>
                   <td>
-                    {{ item.email }}
+                    {{ item.title }}
                   </td>
                   <td>
-                    {{ item.phone }}
-                  </td>
-                  <td>
-                    {{ item.address }}
+                    {{ item.description }}
                   </td>
                   <td class="text-right">
                     <div style="position: static !important" ngbDropdown placement="top-right">
@@ -169,15 +165,32 @@
   </div>
   
   
-  <!-- <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateRoleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateCategoryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
       <div class="modal-content">   
-        <app-item-role [resRole]="dataChild" [type]="typeChild"></app-item-role>
+        <app-item-category [resCategory]="dataChild" [type]="typeChild"></app-item-category>
       </div>
     </div>
-  </div>  -->
+  </div> 
 
     
-
+  <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="restoreEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="restoreEmployeeModalLabel">Xác nhận</h1>
+          <button type="button"  #closeModalDelete class="btn-close" data-bs-dismiss="modal" aria-label="Close" ></button>
+        </div>
+        <div class="modal-body" *ngIf="resCategoryTemp">
+          Bạn có chắc muốn xóa [<span class="text-red">{{resCategoryTemp.title}}</span>] !
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="delete()">Xóa         
+          </button>
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" >Không</button>
+        </div>
+      </div>
+    </div>
+  </div> 
   
   

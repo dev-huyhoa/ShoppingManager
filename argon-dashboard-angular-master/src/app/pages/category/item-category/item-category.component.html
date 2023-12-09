@@ -1,0 +1,31 @@
+<div class="modal-header">
+    <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+    <button #closeModal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <ng-container *ngIf="resCategory">
+      <div class="container-fluid" >
+        <form>
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-username">Tên danh mục
+                  </label>
+                  <input type="text" id="name" name="name" class="form-control " placeholder="Nhập tên danh mục" (input)="inputChange()" [(ngModel)]="resCategory.title">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </form>
+      </div>
+  
+      <div class="row align-items-center">
+        <div class="col-12 text-right">
+          <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal" >Xóa</button>
+          <button (click)="save()" *ngIf="isChange" class="btn btn-sm btn-success" >{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+        </div>
+      </div>       
+    </ng-container>
+  </div>     
