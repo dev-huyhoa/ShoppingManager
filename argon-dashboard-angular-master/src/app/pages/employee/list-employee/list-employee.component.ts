@@ -93,9 +93,5 @@ getDataRow(value: any){
   console.log(value);
 }
 isAction: boolean = false;
-closeModal() {
-
-  
-}
 
 }

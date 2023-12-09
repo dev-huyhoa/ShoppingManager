@@ -35,7 +35,21 @@ export class RoleService{
         var message = this.configService.error(error.status, error.error != null?error.error.text:"");
         this.toastr.error(error);          
       })})
-      return value
-  
+      return value 
+    }
+
+    create(data:any)
+    {
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/createRole", data);
+    }
+
+    update(data:any)
+    {
+      return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Role/updateRole", data);
+    }
+
+    delete(idRole: any)
+    {
+      return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Role/deleteRole?idRole="+ idRole);
     }
 }
