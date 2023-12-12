@@ -31,9 +31,7 @@ export class LoginComponent implements OnInit {
 
   ) {}
 
-  ngOnInit() {
-    console.log(this.configService.clientUrl + '#/Dashboard');
-    
+  ngOnInit() {    
   }
 
   login(){
@@ -43,7 +41,8 @@ export class LoginComponent implements OnInit {
         if (res.success == true) 
         {
           this.resAthentication = this.response.data
-          this.toastr.success(res.message);  
+          localStorage.setItem("token", this.resAthentication.token)
+          localStorage.setItem("currentUser", JSON.stringify(this.resAthentication))
           document.location.assign(this.configService.clientUrl + '#/Dashboard')
 
         }

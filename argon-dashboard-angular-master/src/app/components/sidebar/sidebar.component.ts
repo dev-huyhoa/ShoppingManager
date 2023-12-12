@@ -13,14 +13,11 @@ export const ROUTES: RouteInfo[] = [
     { path: '/maps', title: 'Maps',  icon:'ni-pin-3 text-orange', class: '' },
     { path: '/user-profile', title: 'User profile',  icon:'ni-single-02 text-yellow', class: '' },
     { path: '/tables', title: 'Tables',  icon:'ni-bullet-list-67 text-red', class: '' },
-    { path: '/register', title: 'Register',  icon:'ni-circle-08 text-pink', class: '' },
     { path: '/list-employee', title: 'Nhân viên',  icon:'ni ni-circle-08 text-purple', class: '' },
     { path: '/list-customer', title: 'Khách Hàng',  icon:'ni ni-single-02 text-purple', class: '' },
     { path: '/list-role', title: 'Chức vụ',  icon:'fa-solid fa-key text-purple', class: '' },
     { path: '/list-category', title: 'Danh Mục',  icon:'fa-solid fa-list text-purple', class: '' },
-    { path: '/list-banner', title: 'Banner',  icon:'ni ni-image text-purple', class: '' }
-
-
+    { path: '/list-banner', title: 'Banner',  icon:'ni ni-image text-purple', class: '' },
 
 ];
 

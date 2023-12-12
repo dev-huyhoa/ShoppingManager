@@ -10,6 +10,7 @@ import { ListCustomerComponent } from 'src/app/pages/customer/list-customer/list
 import { ItemEmployeeComponent } from 'src/app/pages/employee/item-employee/item-employee/item-employee.component';
 import { ListRoleComponent } from 'src/app/pages/role/list-role/list-role.component';
 import { ListCategoryComponent } from 'src/app/pages/category/list-category/list-category.component';
+import { LoginComponent } from 'src/app/pages/login/login.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -21,6 +22,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-customer',  component: ListCustomerComponent },
     { path: 'list-role',  component: ListRoleComponent },
     { path: 'list-category',  component: ListCategoryComponent },
-    { path: 'item-employee/:id1/:id2',  component: ItemEmployeeComponent }
-
+    { path: 'item-employee/:id1/:id2',  component: ItemEmployeeComponent },
 ];

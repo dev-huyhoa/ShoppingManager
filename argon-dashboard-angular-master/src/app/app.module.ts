@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -23,6 +23,7 @@ import { SearchPipe } from './search/search.pipe';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemCategoryComponent } from './pages/category/item-category/item-category.component';
 import { ListCategoryComponent } from './pages/category/list-category/list-category.component';
+import { AuthInterceptor } from "src/app/pages/services_API/AuthInterceptor.service";
 
 @NgModule({
   imports: [
@@ -56,7 +57,8 @@ import { ListCategoryComponent } from './pages/category/list-category/list-categ
     ItemCategoryComponent,
     ListCategoryComponent
   ],
-  providers: [NgbActiveModal],
+  providers: [NgbActiveModal,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
