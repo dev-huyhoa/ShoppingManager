@@ -1,8 +1,8 @@
 export class EmployeeModel {
     idEmployee: string = null
     nameEmployee: string = null
-    email: string = null
-    password: string = null
+    email: string = ''
+    password: string = ''
     newPassword: string = null
     phone: string = null
     gender: boolean = null

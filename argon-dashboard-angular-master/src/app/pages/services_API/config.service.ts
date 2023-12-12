@@ -14,6 +14,7 @@ import {ROUTES} from 'src/app/components/sidebar/sidebar.component'
     }
 
     public apiUrl = "https://localhost:7244";
+    public clientUrl = this.document.location.origin
 
     error(status: any, message: any){
       console.log('Status:  '  + status);
@@ -29,7 +30,6 @@ import {ROUTES} from 'src/app/components/sidebar/sidebar.component'
       else{
           message = "Không kết nối được đến server !"
       }
-  
       return message
     }
 
