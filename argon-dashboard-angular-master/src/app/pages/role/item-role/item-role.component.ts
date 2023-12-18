@@ -58,9 +58,7 @@ export class ItemRoleComponent implements OnInit {
         {
           this.toastr.success(res.message);  
           this.closeModal.nativeElement.click()       
-          setTimeout(() => {
-           this.router.navigate(['','list-role']);    
-        }, 100); 
+          this.listRoleComponent.ngOnInit()
 
         }
         else {

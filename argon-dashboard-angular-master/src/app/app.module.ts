@@ -24,6 +24,8 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ItemCategoryComponent } from './pages/category/item-category/item-category.component';
 import { ListCategoryComponent } from './pages/category/list-category/list-category.component';
 import { AuthInterceptor } from "src/app/pages/services_API/AuthInterceptor.service";
+import { ListProductComponent } from './pages/product/list-product/list-product.component';
+import { ItemProductComponent } from './pages/product/item-product/item-product.component';
 
 @NgModule({
   imports: [
@@ -55,7 +57,9 @@ import { AuthInterceptor } from "src/app/pages/services_API/AuthInterceptor.serv
     ItemRoleComponent,
     SearchPipe,
     ItemCategoryComponent,
-    ListCategoryComponent
+    ListCategoryComponent,
+    ListProductComponent,
+    ItemProductComponent
   ],
   providers: [NgbActiveModal,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],

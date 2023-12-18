@@ -11,6 +11,7 @@ import { ItemEmployeeComponent } from 'src/app/pages/employee/item-employee/item
 import { ListRoleComponent } from 'src/app/pages/role/list-role/list-role.component';
 import { ListCategoryComponent } from 'src/app/pages/category/list-category/list-category.component';
 import { LoginComponent } from 'src/app/pages/login/login.component';
+import { ListProductComponent } from 'src/app/pages/product/list-product/list-product.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -23,4 +24,5 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'list-role',  component: ListRoleComponent },
     { path: 'list-category',  component: ListCategoryComponent },
     { path: 'item-employee/:id1/:id2',  component: ItemEmployeeComponent },
+    { path: 'list-product',  component: ListProductComponent }
 ];

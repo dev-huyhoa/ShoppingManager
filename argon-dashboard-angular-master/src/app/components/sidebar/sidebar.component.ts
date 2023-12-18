@@ -18,6 +18,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-role', title: 'Chức vụ',  icon:'fa-solid fa-key text-purple', class: '' },
     { path: '/list-category', title: 'Danh Mục',  icon:'fa-solid fa-list text-purple', class: '' },
     { path: '/list-banner', title: 'Banner',  icon:'ni ni-image text-purple', class: '' },
+    { path: '/list-product', title: 'Product',  icon:'fa-solid fa-shirt text-purple', class: '' },
 
 ];
 
