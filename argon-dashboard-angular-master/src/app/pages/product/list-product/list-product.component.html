@@ -104,7 +104,7 @@
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <!-- <th scope="col">Id</th> -->
+                  <th scope="col">Id</th>
                   <th scope="col">Tên</th>
                   <th scope="col">Giá</th>
                   <th scope="col">Giá khuyến mãi</th>
@@ -119,9 +119,9 @@
                 <tr *ngFor="let item of resProduct | search: searchText | paginate: {itemsPerPage: tableSize, 
                                                                                       currentPage: page, 
                                                                                       totalItems: count}; let i = index">
-                  <!-- <th scope="row">
-                    {{ item.idEmployee }}
-                  </th> -->
+                  <th scope="row">
+                    {{ item.idProduct }}
+                  </th>
                   <td>
                     {{ item.product.title }}
                   </td>
@@ -141,8 +141,8 @@
                         <i class="fas fa-ellipsis-v"></i>
                       </a>
                       <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-                        <a class="dropdown-item" [routerLink]="['/item-employee','detail',item.idEmployee]">Chi Tiết</a>
-                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal" (click)="getDataRow(item)">Xóa</button>
+                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="childTypeData('detail',item)">Chi Tiết</button>
+                        <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deleteModal">Xóa</button>
                       </div>
                     </div>
                   </td>
@@ -170,6 +170,13 @@
     </div>
   </div>
   
+  <div class="modal fade" id="updateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">   
+        <app-item-product [resProduct]="dataChild" [type]="typeChild"></app-item-product>
+      </div>
+    </div>
+  </div> 
   
   <!-- <div class="modal fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="restoreEmployeeModalLabel" aria-hidden="true">
     <div class="modal-dialog">

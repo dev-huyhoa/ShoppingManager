@@ -4,6 +4,8 @@ import { NotificationService } from "src/app/pages/services_API/notification.ser
 import { ProductModel } from "src/app/model/product.model";
 import { ConfigService } from "src/app/pages/services_API/config.service";
 import { ResponseModel } from "src/app/model/responsiveModels/response.model";
+import { CategoryModel } from "src/app/model/category.model";
+
 import { AuthenticationModel } from 'src/app/model/authentication.model';
 import { PaginationInstance } from 'ngx-pagination'; // Import thư viện phân trang
 import { Router } from '@angular/router';
@@ -28,15 +30,16 @@ export class ListProductComponent implements OnInit {
   count: number = 0
   tableSize: number = 5;
   tableSizes: any = [5, 10, 15, 20]
-  idcategory123 = '0a557d1e-d08c-4ecb-6bc7-08dbfd5100cc'
-
+  idcategory123 = 'f79cb230-3df6-4648-b69b-e7c97f53301a'
+  resCategory: CategoryModel
+  typeChild: string
+  dataChild: ProductModel
   constructor(
     private productService: ProductService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getProductData()
-    this.getNameCategoryByID(this.idcategory123)
   }
 
   getProductData() {
@@ -58,17 +61,28 @@ export class ListProductComponent implements OnInit {
     this.getProductData();
   }
 
-  getNameCategoryByID(idcategory: any){
-    this.productService.getNameCategoryByID(idcategory).subscribe(
-      (res) => {
-        this.response = res;
-        console.log(res);
+  // getNameCategoryByID(idcategory: any){
+  //   this.productService.getNameCategoryByID(idcategory).subscribe(
+  //     (res) => {
+  //       this.response = res;
+  //       this.resCategory = res.data
+  //       let name = this.resCategory.title
+
+  //       return name
         
-        // this.resProduct = res.data
-      },
-      (error) => {
-        this.toastr.error(error);
-      }
-    );
+  //     },
+  //     (error) => {
+  //       this.toastr.error(error);
+  //     }
+  //   );
+  // }
+
+  childTypeData(type:any, value: any = null){
+    if (type) {
+      this.typeChild = type
+    }
+    if (value) {
+      this.dataChild = Object.assign({}, value)
+    }
   }
 }
