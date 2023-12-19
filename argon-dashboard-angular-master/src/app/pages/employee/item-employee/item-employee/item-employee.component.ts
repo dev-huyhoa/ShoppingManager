@@ -35,6 +35,8 @@ export class ItemEmployeeComponent implements OnInit {
     this.init();  
     this.roleService.views().then(response =>{
       this.resRole = response
+      console.log(this.resRole,"this.resRole");
+            
     })
   }
   

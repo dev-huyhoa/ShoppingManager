@@ -15,29 +15,50 @@
                   <input type="text" id="name" name="name" class="form-control " placeholder="Nhập tên chức vụ" (input)="inputChange()" [(ngModel)]="resProduct.product.title">
                 </div>
               </div>
-              <div class="col-lg-6">
+              <div class="col-lg-3">
                 <div class="form-group">
                   <label class="form-control-label" for="input-username">Giá khuyến mãi
                   </label>
                   <input type="text" id="name" name="name" class="form-control " placeholder="Nhập tên chức vụ" (input)="inputChange()" [(ngModel)]="resProduct.product.priceSale">
                 </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-6">
+              <div class="col-lg-3">
                 <div class="form-group">
                   <label class="form-control-label" for="input-username">Đơn giá
                   </label>
                   <input type="text" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resProduct.product.price">
                 </div>
               </div>
-              <div class="col-lg-6 col-12">
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
                 <div class="form-group" *ngIf="resCategory">
                   <label class="form-control-label" for="input-email">Danh mục</label>
-                  <select class="form-control" [(ngModel)]="resCategory[0].idCategory">
-                    <option *ngFor="let item of resCategory" [Value]="item.idCategory">{{ item.idCategory }}</option>
+                  <select class="form-control" [(ngModel)]="resProduct.product.categoryId">
+                    <option *ngFor="let item of resCategory" [ngValue]="item.idCategory">{{ item.title }}</option>
                   </select>
                 </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-username"> Mô tả
+                  </label>
+                  <input type="text" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resProduct.product.description">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                    <input id="file" type="file" (change)="onFileChanged($event)" class="d-none" accept="image/*,.jpg, .png, .jpeg" style="display: none;" multiple>
+                    <label for="file" style="margin-left: 20px;" class="btn text-white btn-primary btn-round">Chọn ảnh</label>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group">
+                  <img *ngFor="let url of urls" [src]="url"
+                  style="border-radius:10px; object-fit:fill; width: 10rem;height: 12rem;"><br>
               </div>
             </div>
           </div>

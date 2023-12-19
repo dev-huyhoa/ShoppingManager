@@ -5,6 +5,7 @@ import { ProductModel } from "src/app/model/product.model";
 import { ConfigService } from "src/app/pages/services_API/config.service";
 import { ResponseModel } from "src/app/model/responsiveModels/response.model";
 import { CategoryModel } from "src/app/model/category.model";
+import { CategoryService } from "src/app/pages/services_API/category.service";
 
 import { AuthenticationModel } from 'src/app/model/authentication.model';
 import { PaginationInstance } from 'ngx-pagination'; // Import thư viện phân trang
@@ -31,22 +32,22 @@ export class ListProductComponent implements OnInit {
   tableSize: number = 5;
   tableSizes: any = [5, 10, 15, 20]
   idcategory123 = 'f79cb230-3df6-4648-b69b-e7c97f53301a'
-  resCategory: CategoryModel
+  resCategory: CategoryModel[]
   typeChild: string
   dataChild: ProductModel
   constructor(
+    private categoryService: CategoryService,
     private productService: ProductService,
     private toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.getProductData()
+
   }
 
   getProductData() {
     this.productService.gets().subscribe(
-      (res) => {
-        console.log(res);
-        
+      (res) => {        
         this.response = res;
         this.resProduct = res.data
       },
@@ -55,6 +56,8 @@ export class ListProductComponent implements OnInit {
       }
     );
   }
+
+
 
   onTableDataChange(event: any) {
     this.page = event

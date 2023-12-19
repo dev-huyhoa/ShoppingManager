@@ -19,14 +19,15 @@ import { ListProductComponent } from 'src/app/pages/product/list-product/list-pr
 export class ItemProductComponent implements OnInit {
   @Input() resProduct: ProductModel
   @Input() type: string
+  resCategory: CategoryModel
   resProductTmp: ProductModel
   isChange: boolean = false
   response: ResponseModel
-  resCategory: CategoryModel
+  // resCategory: CategoryModel
   idtest: any = 'Quần Áo'
   @ViewChild('closeModal') closeModal: ElementRef
   @ViewChild('closeModalDelete') closeModalDelete: ElementRef
-
+  urls=[]
   constructor(
     private productService: ProductService, 
     private categoryService: CategoryService,
@@ -36,11 +37,7 @@ export class ItemProductComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {  
-    this.categoryService.views().then(response =>{
-      console.log(response[0].idCategory,'==');
-      
-    })  
-    
+    this.getCategoryData()
   }
 
   ngOnChanges(): void {
@@ -53,6 +50,20 @@ export class ItemProductComponent implements OnInit {
     this.resProductTmp = Object.assign({}, this.resProduct)  
   }
 
+  getCategoryData(){
+    this.categoryService.gets().subscribe(
+      (res) => {
+        this.response = res;
+        this.resCategory = res.data;
+        console.log(this.resCategory,"rescategory");
+          
+      },
+      (error) => {
+        this.toastr.error(error);          
+      }
+    );
+  }
+
   inputChange(){
     if (JSON.stringify(this.resProduct) != JSON.stringify(this.resProductTmp)) {
       this.isChange = true
@@ -61,6 +72,33 @@ export class ItemProductComponent implements OnInit {
       this.isChange = false
     }
   }
+  fileSave: any
+  // onFileChanged(event: any) {
+  //   const input = event.target as HTMLInputElement;
+  //   if (input.files && input.files.length > 0) {
+  //     const file = input.files[0];
+  //     const reader = new FileReader();
+  //     this.fileSave = file
+  //     reader.onload = () => {
+  //       // Cập nhật giá trị của resEmployee.image thành hình ảnh được chọn
+  //       // this.image = reader.result as string;
+  //     };
+  //     reader.readAsDataURL(this.fileSave);
+  //   }
+  // }
+
+   onFileChanged(e) {
+    if(e.target.files){
+      for(let i=0; i<File.length; i++){
+          var reader = new FileReader()
+          reader.readAsDataURL(e.target.files[i])
+          reader.onload=(events:any)=>{
+            this.urls.push(events.target.result)
+          }
+      }
+    }
+   }
+
 
   // save(){
   //   if (this.type == 'create') {
