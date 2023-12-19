@@ -1,6 +1,10 @@
 import { Component, OnInit, Output, Input,ViewChild, ElementRef} from '@angular/core';
 import { ProductModel } from 'src/app/model/product.model';
+import { CategoryModel } from 'src/app/model/category.model';
+
 import { ProductService } from "src/app/pages/services_API/product.service";
+import { CategoryService } from "src/app/pages/services_API/category.service";
+
 import { ConfigService } from "src/app/pages/services_API/config.service";
 import { ResponseModel } from "src/app/model/responsiveModels/response.model";
 import { ToastrService } from 'ngx-toastr';
@@ -18,21 +22,30 @@ export class ItemProductComponent implements OnInit {
   resProductTmp: ProductModel
   isChange: boolean = false
   response: ResponseModel
-
+  resCategory: CategoryModel
+  idtest: any = 'Quần Áo'
   @ViewChild('closeModal') closeModal: ElementRef
   @ViewChild('closeModalDelete') closeModalDelete: ElementRef
 
   constructor(
     private productService: ProductService, 
+    private categoryService: CategoryService,
     private toastr: ToastrService,
     private router: Router,
     private listProductComponent: ListProductComponent
   ) { }
 
-  ngOnInit(): void {    
+  ngOnInit(): void {  
+    this.categoryService.views().then(response =>{
+      console.log(response[0].idCategory,'==');
+      
+    })  
+    
   }
 
   ngOnChanges(): void {
+    // console.log(this.resCategory);
+
     if (this.type == "create") {
      this.resProduct = new ProductModel()
      this.resProductTmp = Object.assign({}, this.resProduct)
