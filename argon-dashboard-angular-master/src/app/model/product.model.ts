@@ -12,4 +12,7 @@ export class ProductModel {
     quantity: number
     idSize: number
     isDelete: number
+    product: {
+        image: string
+    }
 }

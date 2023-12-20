@@ -47,7 +47,10 @@ export class ItemProductComponent implements OnInit {
      this.resProduct = new ProductModel()
      this.resProductTmp = Object.assign({}, this.resProduct)
     }
-    this.resProductTmp = Object.assign({}, this.resProduct)  
+    this.resProductTmp = Object.assign({}, this.resProduct) 
+    console.log(this.resProduct.product,"this.resProduct.image");
+    
+    this.urls.push(this.resProduct.product) 
   }
 
   getCategoryData(){
@@ -88,14 +91,19 @@ export class ItemProductComponent implements OnInit {
   // }
 
    onFileChanged(e) {
+    this.urls = []
     if(e.target.files){
-      for(let i=0; i<File.length; i++){
+      console.log(e.target.files.length);
+      console.log(File.length,"File.length");
+      
+      for(let i=0; i<4; i++){
           var reader = new FileReader()
           reader.readAsDataURL(e.target.files[i])
           reader.onload=(events:any)=>{
             this.urls.push(events.target.result)
           }
       }
+      console.log(this.urls,"url");
     }
    }
 
