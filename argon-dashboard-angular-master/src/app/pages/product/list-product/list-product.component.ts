@@ -19,7 +19,9 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ListProductComponent implements OnInit {
   @ViewChild('closeModalDelete') closeModalDelete: ElementRef;
-  resProduct: any
+  resProduct: ProductModel
+  imageUrls: any
+  // productImg: any
   response: ResponseModel
   data: ProductModel
   resProductTemp: ProductModel
@@ -49,7 +51,8 @@ export class ListProductComponent implements OnInit {
     this.productService.gets().subscribe(
       (res) => {        
         this.response = res;
-        this.resProduct = res.data
+        this.resProduct = res.data   
+        this.imageUrls = this.resProduct[0].imageUrls     
       },
       (error) => {
         this.toastr.error(error);

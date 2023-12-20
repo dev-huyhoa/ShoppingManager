@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input,ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, Input,ViewChild, ElementRef} from '@angular/core';
 import { ProductModel } from 'src/app/model/product.model';
 import { CategoryModel } from 'src/app/model/category.model';
 
@@ -18,7 +18,11 @@ import { ListProductComponent } from 'src/app/pages/product/list-product/list-pr
 })
 export class ItemProductComponent implements OnInit {
   @Input() resProduct: ProductModel
+  @Input() productImg: any
+
   @Input() type: string
+  urls:any=[]
+
   resCategory: CategoryModel
   resProductTmp: ProductModel
   isChange: boolean = false
@@ -27,7 +31,6 @@ export class ItemProductComponent implements OnInit {
   idtest: any = 'Quần Áo'
   @ViewChild('closeModal') closeModal: ElementRef
   @ViewChild('closeModalDelete') closeModalDelete: ElementRef
-  urls:any=[]
   constructor(
     private productService: ProductService, 
     private categoryService: CategoryService,
@@ -41,29 +44,21 @@ export class ItemProductComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    // console.log(this.resCategory);
-
     if (this.type == "create") {
      this.resProduct = new ProductModel()
      this.resProductTmp = Object.assign({}, this.resProduct)
     }
     this.resProductTmp = Object.assign({}, this.resProduct)  
-    this.urls = [] 
-    console.log(this.resProduct);  
-    this.urls.push(this.resProduct) 
-   
-    
-    console.log(this.urls,"urls");
-    
+    this.urls = []     
+    this.urls.push(this.productImg) 
+    console.log(this.urls,"this.urls ON CHANGE");    
   }
 
   getCategoryData(){
     this.categoryService.gets().subscribe(
       (res) => {
         this.response = res;
-        this.resCategory = res.data;
-        console.log(this.resCategory,"rescategory");
-          
+        this.resCategory = res.data;          
       },
       (error) => {
         this.toastr.error(error);          
@@ -96,18 +91,18 @@ export class ItemProductComponent implements OnInit {
 
    onFileChanged(e) {
     this.urls = []
-    if(e.target.files){
-      console.log(e.target.files.length);
-      console.log(File.length,"File.length");
-      
+    if(e.target.files){     
       for(let i=0; i<4; i++){
           var reader = new FileReader()
           reader.readAsDataURL(e.target.files[i])
           reader.onload=(events:any)=>{
-            // this.urls.push(events.target.result)
+            this.urls.push(events.target.result)
+            console.log(events.target.result,"events.target.result");
+            
           }
       }
-      console.log(this.urls,"url");
+      
+      console.log(this.urls,"urlONFILE");
     }
    }
 
