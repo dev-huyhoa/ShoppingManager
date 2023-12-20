@@ -27,7 +27,7 @@ export class ItemProductComponent implements OnInit {
   idtest: any = 'Quần Áo'
   @ViewChild('closeModal') closeModal: ElementRef
   @ViewChild('closeModalDelete') closeModalDelete: ElementRef
-  urls=[]
+  urls:any=[]
   constructor(
     private productService: ProductService, 
     private categoryService: CategoryService,
@@ -47,10 +47,14 @@ export class ItemProductComponent implements OnInit {
      this.resProduct = new ProductModel()
      this.resProductTmp = Object.assign({}, this.resProduct)
     }
-    this.resProductTmp = Object.assign({}, this.resProduct) 
-    console.log(this.resProduct.product,"this.resProduct.image");
+    this.resProductTmp = Object.assign({}, this.resProduct)  
+    this.urls = [] 
+    console.log(this.resProduct);  
+    this.urls.push(this.resProduct) 
+   
     
-    this.urls.push(this.resProduct.product) 
+    console.log(this.urls,"urls");
+    
   }
 
   getCategoryData(){
@@ -100,7 +104,7 @@ export class ItemProductComponent implements OnInit {
           var reader = new FileReader()
           reader.readAsDataURL(e.target.files[i])
           reader.onload=(events:any)=>{
-            this.urls.push(events.target.result)
+            // this.urls.push(events.target.result)
           }
       }
       console.log(this.urls,"url");
