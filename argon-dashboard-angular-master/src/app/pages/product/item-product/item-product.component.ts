@@ -7,6 +7,8 @@ import { CategoryService } from "src/app/pages/services_API/category.service";
 
 import { ConfigService } from "src/app/pages/services_API/config.service";
 import { ResponseModel } from "src/app/model/responsiveModels/response.model";
+import { ProductImgModel } from "src/app/model/productImg.model";
+
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListProductComponent } from 'src/app/pages/product/list-product/list-product.component';
@@ -22,11 +24,12 @@ export class ItemProductComponent implements OnInit {
 
   @Input() type: string
   urls:any=[]
-
+  resProductImg: ProductImgModel[]
   resCategory: CategoryModel
   resProductTmp: ProductModel
   isChange: boolean = false
   response: ResponseModel
+  
   // resCategory: CategoryModel
   idtest: any = 'Quần Áo'
   @ViewChild('closeModal') closeModal: ElementRef
@@ -41,6 +44,7 @@ export class ItemProductComponent implements OnInit {
 
   ngOnInit(): void {  
     this.getCategoryData()
+      
   }
 
   ngOnChanges(): void {
@@ -48,9 +52,11 @@ export class ItemProductComponent implements OnInit {
      this.resProduct = new ProductModel()
      this.resProductTmp = Object.assign({}, this.resProduct)
     }
+    if (this.type == "detail") {
+      this.getProductImg(this.resProduct.idProduct)
+    }
     this.resProductTmp = Object.assign({}, this.resProduct)  
-    this.urls = []     
-    this.urls.push(this.productImg) 
+
     console.log(this.urls,"this.urls ON CHANGE");    
   }
 
@@ -65,6 +71,28 @@ export class ItemProductComponent implements OnInit {
       }
     );
   }
+
+  getProductImg(idProduct: any){
+    this.productService.getsProductImg(idProduct).subscribe(
+      (res) => {
+        this.response = res;
+        this.resProductImg = res.data;    
+        this.urls = []     
+
+        const array = []
+        this.resProductImg.forEach(element => {
+          this.urls.push(element.imageUrl)            
+        });
+          
+        console.log(this.urls);
+        
+      },
+      (error) => {
+        this.toastr.error(error);          
+      }
+    );
+  }
+
 
   inputChange(){
     if (JSON.stringify(this.resProduct) != JSON.stringify(this.resProductTmp)) {
@@ -96,17 +124,15 @@ export class ItemProductComponent implements OnInit {
     const input = e.target as HTMLInputElement;
     if(e.target.files){
       this.urls = []
-      let a = []     
       for(let i=0; i<e.target.files.length; i++){
           const file = input.files[i]
           var reader = new FileReader()
           reader.readAsDataURL(e.target.files[i])
           reader.onload=(events:any)=>{
             this.formData.append('file', file);
-            a.push(events.target.result)            
+            this.urls.push(events.target.result)            
           }
       }     
-      this.urls[0] = a
       console.log(this.urls,"urlONFILE");
     }
    }
@@ -115,6 +141,8 @@ export class ItemProductComponent implements OnInit {
 
   save(){
     if (this.type == 'detail') {
+      console.log(this.resProduct,"product");
+      
       this.formData.append('resProductData', JSON.stringify(this.resProduct));
       console.log(this.formData.get('resProductData'));
       console.log(this.urls,"url save");

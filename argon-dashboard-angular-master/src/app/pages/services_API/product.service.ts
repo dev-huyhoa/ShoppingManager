@@ -17,7 +17,10 @@ export class ProductService {
     {
         return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Product/getProduct");
     }
-
+    getsProductImg(idProduct: any)
+    {
+        return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Product/getProductImg?idProduct="+idProduct);
+    }
     create(file: any)
     {
         return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Product/createProduct", file);

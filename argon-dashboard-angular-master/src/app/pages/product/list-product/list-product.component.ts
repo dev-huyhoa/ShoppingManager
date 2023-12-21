@@ -51,6 +51,8 @@ export class ListProductComponent implements OnInit {
     this.productService.gets().subscribe(
       (res) => {        
         this.response = res;
+        console.log(res);
+        
         this.resProduct = res.data   
         this.imageUrls = this.resProduct[0].imageUrls     
       },
