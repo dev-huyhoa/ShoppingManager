@@ -12,21 +12,21 @@
                 <div class="form-group">
                   <label class="form-control-label" for="input-username">Tên sản phẩm
                   </label>
-                  <input type="text" id="name" name="name" class="form-control " placeholder="Nhập tên chức vụ" (input)="inputChange()" [(ngModel)]="resProduct.product.title">
+                  <input type="text" id="name" name="name" class="form-control " placeholder="Nhập tên sản phẩm" (input)="inputChange()" [(ngModel)]="resProduct.product.title">
                 </div>
               </div>
               <div class="col-lg-3">
                 <div class="form-group">
                   <label class="form-control-label" for="input-username">Giá khuyến mãi
                   </label>
-                  <input type="text" id="name" name="name" class="form-control " placeholder="Nhập tên chức vụ" (input)="inputChange()" [(ngModel)]="resProduct.product.priceSale">
+                  <input (input)="inputChange()" type="text" id="name" name="name" class="form-control " placeholder="Nhập giá khuyến mãi" (input)="inputChange()" [(ngModel)]="resProduct.product.priceSale">
                 </div>
               </div>
               <div class="col-lg-3">
                 <div class="form-group">
                   <label class="form-control-label" for="input-username">Đơn giá
                   </label>
-                  <input type="text" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resProduct.product.price">
+                  <input (input)="inputChange()" type="text" id="price" name="price" class="form-control " placeholder="Nhập đơn giá" (input)="inputChange()" [(ngModel)]="resProduct.product.price">
                 </div>
               </div>
             </div>
@@ -66,8 +66,8 @@
               justify-content: space-around">
                   <img *ngFor="let url of urls[0]" [src]="url"
                   style="border-radius:10px; object-fit:fill; width: 10rem;height: 12rem;"><br>
+                  
               </div>
-              
             </div>
           </div>
         </form>
@@ -76,7 +76,7 @@
       <div class="row align-items-center">
         <div class="col-12 text-right">
           <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteRoleModal" >Xóa</button>
-          <button (click)="save()" *ngIf="isChange" class="btn btn-sm btn-success" >{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+          <button (click)="save()" class="btn btn-sm btn-success" >Lưu</button>
         </div>
       </div>       
     </ng-container>

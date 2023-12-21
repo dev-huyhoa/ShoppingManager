@@ -68,14 +68,16 @@ export class ItemProductComponent implements OnInit {
 
   inputChange(){
     if (JSON.stringify(this.resProduct) != JSON.stringify(this.resProductTmp)) {
+      console.log("123");
+      
       this.isChange = true
     }
     else{
       this.isChange = false
     }
   }
-  fileSave: any
-  // onFileChanged(event: any) {
+  // fileSave: any
+  // onFileChanged123(event: any) {
   //   const input = event.target as HTMLInputElement;
   //   if (input.files && input.files.length > 0) {
   //     const file = input.files[0];
@@ -89,66 +91,73 @@ export class ItemProductComponent implements OnInit {
   //   }
   // }
 
+  fileSave: any;
    onFileChanged(e) {
-    this.urls = []
-    if(e.target.files){     
-      for(let i=0; i<4; i++){
+    const input = e.target as HTMLInputElement;
+    if(e.target.files){
+      this.urls = []
+      let a = []     
+      for(let i=0; i<e.target.files.length; i++){
+          const file = input.files[i]
           var reader = new FileReader()
           reader.readAsDataURL(e.target.files[i])
           reader.onload=(events:any)=>{
-            this.urls.push(events.target.result)
-            console.log(events.target.result,"events.target.result");
-            
+            this.formData.append('file', file);
+            a.push(events.target.result)            
           }
-      }
-      
+      }     
+      this.urls[0] = a
       console.log(this.urls,"urlONFILE");
     }
    }
 
+  formData:any = new FormData()   
 
-  // save(){
-  //   if (this.type == 'create') {
-  //     this.productService.create().subscribe(
-  //       (res) => {
-  //         this.response = res;
-  //         if (res.success == true) 
-  //         {
-  //           this.toastr.success(res.message);  
-  //           this.closeModal.nativeElement.click()       
-  //           this.listRoleComponent.ngOnInit()
+  save(){
+    if (this.type == 'detail') {
+      this.formData.append('resProductData', JSON.stringify(this.resProduct));
+      console.log(this.formData.get('resProductData'));
+      console.log(this.urls,"url save");
+      
+      this.productService.create(this.formData).subscribe(
+        (res) => {
+          this.response = res;
+          if (res.success == true) 
+          {
+            this.toastr.success(res.message);  
+            this.closeModal.nativeElement.click()       
+            this.listProductComponent.ngOnInit()
+          }
+          else {
+            this.toastr.error(res.message);          
+          }
+        },
+        (error) => {
+          this.toastr.error("Không thể kết nối tới server");          
+        }
+      )
+    }
+    // else{
+    //   this.productService.update(this.resProduct).subscribe(
+    //     (res) => {
+    //       this.response = res;
+    //       if (res.success == true) 
+    //       {
+    //         this.toastr.success(res.message);  
+    //         this.closeModal.nativeElement.click()       
+    //         this.listRoleComponent.ngOnInit()
   
-  //         }
-  //         else {
-  //           this.toastr.error(res.message);          
-  //         }
-  //       },
-  //       (error) => {
-  //         this.toastr.error("Không thể kết nối tới server");          
-  //       }
-  //     )
-  //   }
-  //   else{
-  //     this.productService.update(this.resProduct).subscribe(
-  //       (res) => {
-  //         this.response = res;
-  //         if (res.success == true) 
-  //         {
-  //           this.toastr.success(res.message);  
-  //           this.closeModal.nativeElement.click()       
-  //           this.listRoleComponent.ngOnInit()
-  
-  //         }
-  //         else {
-  //           this.toastr.error(res.message);          
-  //         }
-  //       },
-  //       (error) => {
-  //         this.toastr.error("Không thể kết nối tới server");          
-  //       }
-  //     )
-  //   }
-  //  }
+    //       }
+    //       else {
+    //         this.toastr.error(res.message);          
+    //       }
+    //     },
+    //     (error) => {
+    //       this.toastr.error("Không thể kết nối tới server");          
+    //     }
+    //   )
+    // }
+   }
 
 
 }
