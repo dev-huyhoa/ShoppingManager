@@ -1,7 +1,7 @@
 export class ProductModel {
-    idProduct: string = null
+    idProduct: string
     title: string = null
-    price: number = 0
+    price: number
     priceSale: number
     description: string
     isBestseller: boolean

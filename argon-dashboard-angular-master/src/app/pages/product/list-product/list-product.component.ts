@@ -44,7 +44,9 @@ export class ListProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductData()
-
+    // this.categoryService.views().then(response =>{
+    //   this.resCategory = response   
+    // })
   }
 
   getProductData() {
@@ -70,19 +72,9 @@ export class ListProductComponent implements OnInit {
   }
 
   // getNameCategoryByID(idcategory: any){
-  //   this.productService.getNameCategoryByID(idcategory).subscribe(
-  //     (res) => {
-  //       this.response = res;
-  //       this.resCategory = res.data
-  //       let name = this.resCategory.title
-
-  //       return name
-        
-  //     },
-  //     (error) => {
-  //       this.toastr.error(error);
-  //     }
-  //   );
+  //   console.log(this.resCategory);
+  //       let name = this.resCategory.find((x: any) => x.id == idcategory)
+  //       return name   
   // }
 
   childTypeData(type:any, value: any = null){

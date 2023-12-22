@@ -19,14 +19,14 @@
                 <div class="form-group">
                   <label class="form-control-label" for="input-username">Giá khuyến mãi
                   </label>
-                  <input (input)="inputChange()" type="text" id="name" name="name" class="form-control " placeholder="Nhập giá khuyến mãi" (input)="inputChange()" [(ngModel)]="resProduct.priceSale">
+                  <input (input)="inputChange()" type="number" id="priceSale" name="priceSale" class="form-control " placeholder="Nhập giá khuyến mãi" (input)="inputChange()" [(ngModel)]="resProduct.priceSale">
                 </div>
               </div>
               <div class="col-lg-3">
                 <div class="form-group">
                   <label class="form-control-label" for="input-username">Đơn giá
                   </label>
-                  <input (input)="inputChange()" type="text" id="price" name="price" class="form-control " placeholder="Nhập đơn giá" (input)="inputChange()" [(ngModel)]="resProduct.price">
+                  <input (input)="inputChange()" type="number" id="price" name="price" class="form-control " placeholder="Nhập đơn giá" (input)="inputChange()" [(ngModel)]="resProduct.price">
                 </div>
               </div>
             </div>

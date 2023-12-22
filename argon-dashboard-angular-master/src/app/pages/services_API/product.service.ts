@@ -26,6 +26,12 @@ export class ProductService {
         return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Product/createProduct", file);
     }
 
+    updateProductImg(file: any)
+    {
+        return this.http.post<ResponseModel>( this.configService.apiUrl + "/api/Product/updateProductImg", file);
+    }
+
+
     getNameCategoryByID(idCategory: any)
     {
         return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Category/GetCategoryById?idCategory="+idCategory);

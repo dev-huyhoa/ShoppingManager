@@ -104,14 +104,14 @@
             <table class="table align-items-center table-flush">
               <thead class="thead-light">
                 <tr>
-                  <th scope="col">Id</th>
+                  <!-- <th scope="col">Id</th> -->
                   <th scope="col">Tên</th>
                   <th scope="col">Giá</th>
                   <th scope="col">Giá khuyến mãi</th>
                   <th scope="col">Danh Mục</th>
 
                   <th scope="col">
-                    <button type="button" class="btn btn-success" [routerLink]="['/item-employee','create','new']" style="float: right;">Thêm mới</button>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#updateModal" (click)="childTypeData('create')" style="float: right;">Thêm mới</button>
                   </th>
                 </tr>
               </thead>
@@ -119,9 +119,9 @@
                 <tr *ngFor="let item of resProduct | search: searchText | paginate: {itemsPerPage: tableSize, 
                                                                                       currentPage: page, 
                                                                                       totalItems: count}; let i = index">
-                  <th scope="row">
+                  <!-- <th scope="row">
                     {{ item.idProduct }}
-                  </th>
+                  </th> -->
                   <td>
                     {{ item.title }}
                   </td>
@@ -133,7 +133,7 @@
                     {{ item.priceSale }}
                   </td>
                   <td>
-                    {{ item.categoryId }}
+                    {{ item.categoryId}}
                   </td>
                   <td class="text-right">
                     <div style="position: static !important" ngbDropdown placement="top-right">

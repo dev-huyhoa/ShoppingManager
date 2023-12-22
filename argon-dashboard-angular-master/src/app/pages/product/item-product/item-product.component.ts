@@ -50,14 +50,13 @@ export class ItemProductComponent implements OnInit {
   ngOnChanges(): void {
     if (this.type == "create") {
      this.resProduct = new ProductModel()
+     this.urls = []
      this.resProductTmp = Object.assign({}, this.resProduct)
     }
     if (this.type == "detail") {
       this.getProductImg(this.resProduct.idProduct)
     }
     this.resProductTmp = Object.assign({}, this.resProduct)  
-
-    console.log(this.urls,"this.urls ON CHANGE");    
   }
 
   getCategoryData(){
@@ -140,14 +139,29 @@ export class ItemProductComponent implements OnInit {
   formData:any = new FormData()   
 
   save(){
-    if (this.type == 'detail') {
-      console.log(this.resProduct,"product");
-      
-      this.formData.append('resProductData', JSON.stringify(this.resProduct));
-      console.log(this.formData.get('resProductData'));
-      console.log(this.urls,"url save");
-      
+    if (this.type == 'create') {      
+      this.formData.append('resProductData', JSON.stringify(this.resProduct));    
       this.productService.create(this.formData).subscribe(
+        (res) => {
+          this.response = res;
+          if (res.success == true) 
+          {
+            this.toastr.success(res.message);  
+            this.closeModal.nativeElement.click()       
+            this.listProductComponent.ngOnInit()
+          }
+          else {
+            this.toastr.error(res.message);          
+          }
+        },
+        (error) => {
+          this.toastr.error("Không thể kết nối tới server");          
+        }
+      )
+    }
+    else{
+      this.formData.append('resProductData', JSON.stringify(this.resProduct));    
+      this.productService.updateProductImg(this.formData).subscribe(
         (res) => {
           this.response = res;
           if (res.success == true) 
