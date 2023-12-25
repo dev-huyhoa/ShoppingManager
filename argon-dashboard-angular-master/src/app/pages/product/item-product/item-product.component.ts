@@ -29,9 +29,10 @@ export class ItemProductComponent implements OnInit {
   resProductTmp: ProductModel
   isChange: boolean = false
   response: ResponseModel
-  
-  // resCategory: CategoryModel
-  idtest: any = 'Quần Áo'
+  resProductTemp: ProductModel
+  fileSave: any;
+  formData:any = new FormData()  
+
   @ViewChild('closeModal') closeModal: ElementRef
   @ViewChild('closeModalDelete') closeModalDelete: ElementRef
   constructor(
@@ -49,7 +50,6 @@ export class ItemProductComponent implements OnInit {
   }
 
   ngOnChanges(): void {
-    console.log(this.type);
     
     if (this.type == "create") {
      this.resProduct = new ProductModel()
@@ -80,8 +80,6 @@ export class ItemProductComponent implements OnInit {
         this.response = res;
         this.resProductImg = res.data;    
         this.urls = []     
-
-        const array = []
         this.resProductImg.forEach(element => {
           this.urls.push(element.imageUrl)            
         });
@@ -97,50 +95,15 @@ export class ItemProductComponent implements OnInit {
 
 
   inputChange(){
-    if (JSON.stringify(this.resProduct) != JSON.stringify(this.resProductTmp)) {
-      console.log("123");
-      
+    if (JSON.stringify(this.resProduct) != JSON.stringify(this.resProductTmp)) {      
       this.isChange = true
     }
-    else{
+    else
+    {
       this.isChange = false
     }
   }
-  // fileSave: any
-  // onFileChanged123(event: any) {
-  //   const input = event.target as HTMLInputElement;
-  //   if (input.files && input.files.length > 0) {
-  //     const file = input.files[0];
-  //     const reader = new FileReader();
-  //     this.fileSave = file
-  //     reader.onload = () => {
-  //       // Cập nhật giá trị của resEmployee.image thành hình ảnh được chọn
-  //       // this.image = reader.result as string;
-  //     };
-  //     reader.readAsDataURL(this.fileSave);
-  //   }
-  // }
-
-  fileSave: any;
-   onFileChanged(e) {
-    const input = e.target as HTMLInputElement;
-    if(e.target.files){
-      this.urls = []
-      for(let i=0; i<e.target.files.length; i++){
-          const file = input.files[i]
-          var reader = new FileReader()
-          reader.readAsDataURL(e.target.files[i])
-          reader.onload=(events:any)=>{
-            this.formData.append('file', file);
-            this.urls.push(events.target.result)            
-          }
-      }     
-      console.log(this.urls,"urlONFILE");
-    }
-   }
-
-  formData:any = new FormData()   
-
+ 
   save(){
     if (this.type == 'create') {    
       this.spinner.show()    
@@ -154,6 +117,8 @@ export class ItemProductComponent implements OnInit {
             this.closeModal.nativeElement.click()       
             this.listProductComponent.ngOnInit()
             this.spinner.hide()       
+            this.formData = new FormData();
+            this.resProduct = Object.assign({}, new ProductModel)
           }
           else {
             this.toastr.error(res.message);   
@@ -178,7 +143,8 @@ export class ItemProductComponent implements OnInit {
             this.closeModal.nativeElement.click()       
             this.listProductComponent.ngOnInit()
             this.spinner.hide()       
-
+            this.formData = new FormData();
+            this.productImg = Object.assign({}, new ProductImgModel)
           }
           else {
             this.spinner.hide()
@@ -192,30 +158,43 @@ export class ItemProductComponent implements OnInit {
         }
       )
     }
-    // else{
-    //   this.productService.update(this.resProduct).subscribe(
-    //     (res) => {
-    //       this.response = res;
-    //       if (res.success == true) 
-    //       {
-    //         this.toastr.success(res.message);  
-    //         this.closeModal.nativeElement.click()       
-    //         this.listRoleComponent.ngOnInit()
-  
-    //       }
-    //       else {
-    //         this.toastr.error(res.message);          
-    //       }
-    //     },
-    //     (error) => {
-    //       this.toastr.error("Không thể kết nối tới server");          
-    //     }
-    //   )
-    // }
    }
 
-   showSpinner() {
-    this.spinner.show();
-   
-  }
+   onFileChanged(e) {
+    const input = e.target as HTMLInputElement;
+    if(e.target.files){
+      this.urls = []
+      for(let i=0; i<e.target.files.length; i++){
+          const file = input.files[i]
+          var reader = new FileReader()
+          reader.readAsDataURL(e.target.files[i])
+          reader.onload=(events:any)=>{
+            this.formData.append('file', file);
+            this.urls.push(events.target.result)            
+          }
+      }     
+    }
+   }
+
+   delete(){
+    console.log(this.resProduct.idProduct);
+    this.categoryService.delete(this.resProduct.idProduct).subscribe(
+      (res) => {
+        this.response = res;
+        if (res.success == true) 
+        {         
+          this.toastr.success(res.message);  
+          this.closeModalDelete.nativeElement.click()       
+          this.listProductComponent.ngOnInit()
+
+        }
+        else {
+          this.toastr.error("Không thể kết nối tới server!");  
+        }
+      },
+      (error) => {
+        this.toastr.error("Có lỗi xảy ra!");          
+      }
+    )
+   }
 }

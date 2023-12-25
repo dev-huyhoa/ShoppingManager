@@ -37,5 +37,9 @@ export class ProductService {
         return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Category/GetCategoryById?idCategory="+idCategory);
     }
 
+    delete(idProduct: any)
+    {
+        return this.http.delete<ResponseModel>( this.configService.apiUrl + "/api/Product/deleteProduct?idProduct="+idProduct);
+    }
 
 }

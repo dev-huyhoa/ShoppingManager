@@ -33,7 +33,6 @@ export class ListProductComponent implements OnInit {
   count: number = 0
   tableSize: number = 5;
   tableSizes: any = [5, 10, 15, 20]
-  idcategory123 = 'f79cb230-3df6-4648-b69b-e7c97f53301a'
   resCategory: CategoryModel[]
   typeChild: string
   dataChild: ProductModel
@@ -44,19 +43,17 @@ export class ListProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProductData()
-    // this.categoryService.views().then(response =>{
-    //   this.resCategory = response   
-    // })
   }
+  getDataRow(value: any){
+    this.resProductTemp = value
+  }
+  
 
   getProductData() {
     this.productService.gets().subscribe(
       (res) => {        
-        this.response = res;
-        console.log(res);
-        
-        this.resProduct = res.data   
-        this.imageUrls = this.resProduct[0].imageUrls     
+        this.response = res;        
+        this.resProduct = res.data                
       },
       (error) => {
         this.toastr.error(error);
@@ -64,18 +61,33 @@ export class ListProductComponent implements OnInit {
     );
   }
 
-
+  delete(){
+    this.productService.delete(this.resProductTemp.idProduct).subscribe(
+      (res) => {
+        this.response = res;
+        if (res.success == true) 
+        {         
+          this.toastr.success(res.message);  
+          this.closeModalDelete.nativeElement.click()       
+          this.getProductData()
+          setTimeout(() => {
+            this.closeModalDelete.nativeElement.click()
+           }, 100);
+        }
+        else {
+          this.toastr.error("Không thể kết nối tới server!");  
+        }
+      },
+      (error) => {
+        this.toastr.error("Có lỗi xảy ra!");          
+      }
+    )
+   }
 
   onTableDataChange(event: any) {
     this.page = event
     this.getProductData();
   }
-
-  // getNameCategoryByID(idcategory: any){
-  //   console.log(this.resCategory);
-  //       let name = this.resCategory.find((x: any) => x.id == idcategory)
-  //       return name   
-  // }
 
   childTypeData(type:any, value: any = null){
     if (type) {

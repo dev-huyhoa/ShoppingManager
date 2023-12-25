@@ -31,7 +31,7 @@
   
       <div class="row align-items-center">
         <div class="col-12 text-right">
-          <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteRoleModal" >Xóa</button>
+          <button *ngIf="type=='detail'" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteRoleModal" >Xóa</button>
           <button (click)="save()" *ngIf="isChange" class="btn btn-sm btn-success" >{{type == 'detail' ? "Lưu":"Thêm"}}</button>
         </div>
       </div>       
