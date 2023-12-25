@@ -12,7 +12,7 @@ import { ProductImgModel } from "src/app/model/productImg.model";
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ListProductComponent } from 'src/app/pages/product/list-product/list-product.component';
-
+import {NgxSpinnerService} from "ngx-spinner"
 @Component({
   selector: 'app-item-product',
   templateUrl: './item-product.component.html',
@@ -39,7 +39,8 @@ export class ItemProductComponent implements OnInit {
     private categoryService: CategoryService,
     private toastr: ToastrService,
     private router: Router,
-    private listProductComponent: ListProductComponent
+    private listProductComponent: ListProductComponent,
+    private spinner: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {  
@@ -48,6 +49,8 @@ export class ItemProductComponent implements OnInit {
   }
 
   ngOnChanges(): void {
+    console.log(this.type);
+    
     if (this.type == "create") {
      this.resProduct = new ProductModel()
      this.urls = []
@@ -139,7 +142,8 @@ export class ItemProductComponent implements OnInit {
   formData:any = new FormData()   
 
   save(){
-    if (this.type == 'create') {      
+    if (this.type == 'create') {    
+      this.spinner.show()    
       this.formData.append('resProductData', JSON.stringify(this.resProduct));    
       this.productService.create(this.formData).subscribe(
         (res) => {
@@ -149,9 +153,11 @@ export class ItemProductComponent implements OnInit {
             this.toastr.success(res.message);  
             this.closeModal.nativeElement.click()       
             this.listProductComponent.ngOnInit()
+            this.spinner.hide()       
           }
           else {
-            this.toastr.error(res.message);          
+            this.toastr.error(res.message);   
+            this.spinner.hide()       
           }
         },
         (error) => {
@@ -160,22 +166,29 @@ export class ItemProductComponent implements OnInit {
       )
     }
     else{
-      this.formData.append('resProductData', JSON.stringify(this.resProduct));    
+      this.spinner.show()    
+      this.formData.append('resProductData', JSON.stringify(this.resProduct));  
       this.productService.updateProductImg(this.formData).subscribe(
         (res) => {
+          this.spinner.hide()
           this.response = res;
           if (res.success == true) 
           {
             this.toastr.success(res.message);  
             this.closeModal.nativeElement.click()       
             this.listProductComponent.ngOnInit()
+            this.spinner.hide()       
+
           }
           else {
+            this.spinner.hide()
             this.toastr.error(res.message);          
           }
         },
         (error) => {
-          this.toastr.error("Không thể kết nối tới server");          
+          this.toastr.error("Không thể kết nối tới server");    
+          this.spinner.hide()       
+      
         }
       )
     }
@@ -201,5 +214,8 @@ export class ItemProductComponent implements OnInit {
     // }
    }
 
-
+   showSpinner() {
+    this.spinner.show();
+   
+  }
 }

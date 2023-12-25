@@ -1,5 +1,5 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -8,9 +8,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import { ListEmployeeComponent } from './pages/employee/list-employee/list-employee.component';
@@ -26,6 +24,9 @@ import { ListCategoryComponent } from './pages/category/list-category/list-categ
 import { AuthInterceptor } from "src/app/pages/services_API/AuthInterceptor.service";
 import { ListProductComponent } from './pages/product/list-product/list-product.component';
 import { ItemProductComponent } from './pages/product/item-product/item-product.component';
+
+import {NgxSpinnerModule} from 'ngx-spinner';
+import { TestComponent } from './pages/maps/test/test.component'
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { ItemProductComponent } from './pages/product/item-product/item-product.
       positionClass: 'toast-top-right',
       tapToDismiss: true,
     }),
+    NgxSpinnerModule
   ],
   declarations: [
     AppComponent,
@@ -59,10 +61,12 @@ import { ItemProductComponent } from './pages/product/item-product/item-product.
     ItemCategoryComponent,
     ListCategoryComponent,
     ListProductComponent,
-    ItemProductComponent
+    ItemProductComponent,
+    TestComponent
   ],
   providers: [NgbActiveModal,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

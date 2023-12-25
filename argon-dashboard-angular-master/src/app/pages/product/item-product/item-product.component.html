@@ -1,7 +1,10 @@
 <div class="modal-header">
-    <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+  <h1 class="modal-title fs-5" id="gridDataLabel">Thông tin chi tiết</h1>
+  <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+    <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-pulse" [fullScreen] = "true"><p style="color: white" > Loading... </p></ngx-spinner> -->
     <button #closeModal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  </div>
+</div>
+
   <div class="modal-body">
     <ng-container *ngIf="resProduct">
       <div class="container-fluid" >
@@ -72,10 +75,9 @@
           </div>
         </form>
       </div>
-  
       <div class="row align-items-center">
         <div class="col-12 text-right">
-          <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteRoleModal" >Xóa</button>
+          <button class="btn btn-sm btn-danger"  (click)="showSpinner()" >Xóa</button>
           <button (click)="save()" class="btn btn-sm btn-success" >Lưu</button>
         </div>
       </div>       
