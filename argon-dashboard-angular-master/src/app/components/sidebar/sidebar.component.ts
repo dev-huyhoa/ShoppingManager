@@ -19,6 +19,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/list-customer', title: 'Khách hàng',  icon:'ni ni-single-02 text-purple', class: '' },
     { path: '/list-category', title: 'Danh mục',  icon:'fa-solid fa-list text-purple', class: '' },
     { path: '/list-product', title: 'Sản phẩm',  icon:'fa-solid fa-shirt text-purple', class: '' },
+    { path: '/list-order', title: 'Đơn hàng',  icon:'fa-solid fa-cart-shopping text-purple', class: '' },
 
 ];
 

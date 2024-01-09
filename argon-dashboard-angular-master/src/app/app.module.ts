@@ -26,7 +26,9 @@ import { ListProductComponent } from './pages/product/list-product/list-product.
 import { ItemProductComponent } from './pages/product/item-product/item-product.component';
 
 import {NgxSpinnerModule} from 'ngx-spinner';
-import { TestComponent } from './pages/maps/test/test.component'
+import { TestComponent } from './pages/maps/test/test.component';
+import { ListOrderComponent } from './pages/order/list-order/list-order.component';
+import { ItemOrderComponent } from './pages/order/item-order/item-order.component'
 
 @NgModule({
   imports: [
@@ -62,7 +64,9 @@ import { TestComponent } from './pages/maps/test/test.component'
     ListCategoryComponent,
     ListProductComponent,
     ItemProductComponent,
-    TestComponent
+    TestComponent,
+    ListOrderComponent,
+    ItemOrderComponent
   ],
   providers: [NgbActiveModal,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }],
