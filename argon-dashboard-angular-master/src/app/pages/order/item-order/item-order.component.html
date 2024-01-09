@@ -29,26 +29,26 @@
                   </div>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-email">Tổng tiền</label>
-                    <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resOrder.totalAmount">
+                    <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resOrder.totalAmount" readonly>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-username"> Số tiền đã giảm giá
                     </label>
-                    <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resOrder.amoutReduced">
+                    <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resOrder.amoutReduced" readonly>
                   </div>
                 </div>
                 <div class="col-lg-4">
                     <div class="form-group">
                       <label class="form-control-label" for="input-username"> Số tiền đã thanh toán
                       </label>
-                      <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resOrder.amountPaid
-                      ">
+                      <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resOrder.amountPaid" readonly>
                     </div>
                   </div>
               </div>
