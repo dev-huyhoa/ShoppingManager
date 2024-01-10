@@ -20,8 +20,13 @@ export class OrderService {
         return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Payment/GetPaymentOrder");
     }
 
-    GetPaymentOrderByCus(idCustomer: any)
+    UpdateStatusPayment(idCustomer: any, status: any)
     {
-        return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Payment/GetPaymentOrderByCus?idCustomer="+idCustomer);
+        return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Payment/UpdateStatusPayment?idPayment="+idCustomer+"&status="+status);
+    }
+
+    GetAllPreviousCartsOfUser(idCustomer: any)
+    {
+        return this.http.get<ResponseModel>( this.configService.apiUrl + "/api/Cart/getAllPreviousCartsOfUser?idCustomer="+idCustomer);
     }
 }

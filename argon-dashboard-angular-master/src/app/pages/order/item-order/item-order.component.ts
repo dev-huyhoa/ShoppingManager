@@ -18,7 +18,9 @@ export class ItemOrderComponent implements OnInit {
   resOrderTmp: OrderModel
   isChange: boolean = false
   response: ResponseModel
-
+  resCart : any
+  selectedStatus: boolean = false
+  @ViewChild('statusSelect') statusSelect!: ElementRef;
   @ViewChild('closeModal') closeModal: ElementRef
   @ViewChild('closeModalDelete') closeModalDelete: ElementRef
   constructor(
@@ -37,6 +39,48 @@ export class ItemOrderComponent implements OnInit {
 
     }
     this.resOrderTmp = Object.assign({}, this.resOrder)  
+    if(this.resOrder != undefined && this.resOrder != null){
+    this.getAllPreviousCartsOfUser(this.resOrder.customerId)
+    }    
+  }
+
+  getAllPreviousCartsOfUser(idCustomer: any){
+    this.orderService.GetAllPreviousCartsOfUser(idCustomer).subscribe(
+      (res) => {
+        this.response = res;
+        console.log(res,"resssssssss");       
+        this.resCart = res;
+        // for (let index = 0; index < this.resCart.length; index++) {
+        //   console.log(this.resCart[0].cartItems[0].product.title);
+        // }
+        console.log(this.resCart,"resCart");
+        
+      },
+      (error) => {
+        this.toastr.error(error);          
+      }
+    );
+  }
+
+  UpdateStatusPayment(){
+    this.orderService.UpdateStatusPayment(this.resOrder.id, this.selectedStatus).subscribe(
+      (res) => {
+        this.response = res;
+        if (res.success == true) 
+        {
+          this.toastr.success(res.message);  
+          this.closeModal.nativeElement.click()       
+          this.listOrderComponent.ngOnInit()
+
+        }
+        else {
+          this.toastr.error(res.message);          
+        }
+      },
+      (error) => {
+        this.toastr.error(error);          
+      }
+    );
   }
 
   inputChange(){

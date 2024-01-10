@@ -3,52 +3,61 @@
     <button #closeModal type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-    <ng-container *ngIf="resOrder">
+    <ng-container *ngIf="resCart">
       <div class="container-fluid" >
         <form>
-            <div class="row">
+            <div class="row" *ngFor="let item of resCart">
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-username">Tên sản phẩm
                     </label>
-                    <!-- <input type="text" id="name" name="name" class="form-control " placeholder="Nhập tên sản phẩm" (input)="inputChange()" [(ngModel)]="resProduct.title"> -->
+                    <input type="text" id="name" name="name" class="form-control " placeholder="Nhập tên sản phẩm" [value]="item.cartItems[0].product.title" readonly>
                   </div>
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
-                    <label class="form-control-label" for="input-username">Giá khuyến mãi
+                    <label class="form-control-label" for="input-username">Khuyến mãi
                     </label>
-                    <!-- <input (input)="inputChange()" type="number" id="priceSale" name="priceSale" class="form-control " placeholder="Nhập giá khuyến mãi" (input)="inputChange()" [(ngModel)]="resProduct.priceSale"> -->
+                    <input (input)="inputChange()" type="number" id="priceSale" name="priceSale" class="form-control " placeholder="Nhập giá khuyến mãi" [value]="item.cartItems[0].product.discount" readonly>
                   </div>
                 </div>
                 <div class="col-lg-3">
                   <div class="form-group">
                     <label class="form-control-label" for="input-username">Đơn giá
                     </label>
-                    <!-- <input (input)="inputChange()" type="number" id="price" name="price" class="form-control " placeholder="Nhập đơn giá" (input)="inputChange()" [(ngModel)]="resProduct.price"> -->
+                    <input (input)="inputChange()" type="number" id="price" name="price" class="form-control " placeholder="Nhập đơn giá" [value]="item.cartItems[0].product.price" readonly>
                   </div>
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-lg-4">
+              <div class="row" >
+                <div class="col-lg-3">
                   <div class="form-group">
                     <label class="form-control-label" for="input-email">Tổng tiền</label>
-                    <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resOrder.totalAmount" readonly>
+                    <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" [(ngModel)]="resOrder.totalAmount" readonly>
                   </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                   <div class="form-group">
                     <label class="form-control-label" for="input-username"> Số tiền đã giảm giá
                     </label>
-                    <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resOrder.amoutReduced" readonly>
+                    <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" [(ngModel)]="resOrder.amoutReduced" readonly>
                   </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <div class="form-group">
                       <label class="form-control-label" for="input-username"> Số tiền đã thanh toán
                       </label>
-                      <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả" (input)="inputChange()" [(ngModel)]="resOrder.amountPaid" readonly>
+                      <input type="number" id="description" name="description" class="form-control " placeholder="Nhập mô tả"  [(ngModel)]="resOrder.amountPaid" readonly>
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-username">Trạng Thái</label>
+                      <select [(ngModel)]="selectedStatus" id="status" name="status" class="form-control">
+                        <option [ngValue]="false">Chưa giao hàng</option>
+                        <option [ngValue]="true">Đã giao hàng</option>
+                      </select>
                     </div>
                   </div>
               </div>
@@ -58,8 +67,7 @@
   
       <div class="row align-items-center">
         <div class="col-12 text-right">
-          <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCategoryModal" >Xóa</button>
-          <button (click)="save()" *ngIf="isChange" class="btn btn-sm btn-success" >{{type == 'detail' ? "Lưu":"Thêm"}}</button>
+          <button (click)="UpdateStatusPayment()" class="btn btn-sm btn-success" >{{type == 'detail' ? "Lưu":"Thêm"}}</button>
         </div>
       </div>       
     </ng-container>

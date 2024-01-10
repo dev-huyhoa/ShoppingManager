@@ -75,8 +75,6 @@ export class ListOrderComponent implements OnInit {
     }
     if (value) {
       this.dataChild = Object.assign({}, value)
-    }
-    console.log(value,"value");
-    
+    }    
   }
 }
