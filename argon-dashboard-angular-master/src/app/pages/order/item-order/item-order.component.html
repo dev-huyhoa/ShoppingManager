@@ -6,30 +6,29 @@
     <ng-container *ngIf="resCart">
       <div class="container-fluid" >
         <form>
-            <div class="row" *ngFor="let item of resCart">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-username">Tên sản phẩm
-                    </label>
-                    <input type="text" id="name" name="name" class="form-control " placeholder="Nhập tên sản phẩm" [value]="item.cartItems[0].product.title" readonly>
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-username">Khuyến mãi
-                    </label>
-                    <input (input)="inputChange()" type="number" id="priceSale" name="priceSale" class="form-control " placeholder="Nhập giá khuyến mãi" [value]="item.cartItems[0].product.discount" readonly>
-                  </div>
-                </div>
-                <div class="col-lg-3">
-                  <div class="form-group">
-                    <label class="form-control-label" for="input-username">Đơn giá
-                    </label>
-                    <input (input)="inputChange()" type="number" id="price" name="price" class="form-control " placeholder="Nhập đơn giá" [value]="item.cartItems[0].product.price" readonly>
-                  </div>
+          <div class="cart" *ngFor="let item of resCart">
+            <div class="row" *ngFor="let cart of item.cartItems">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-username">Tên sản phẩm</label>
+                  <input type="text" id="name" name="name" class="form-control" placeholder="Nhập tên sản phẩm" [value]="cart.product.title" readonly>
                 </div>
               </div>
-
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-username">Khuyến mãi</label>
+                  <input type="number" id="priceSale" name="priceSale" class="form-control" placeholder="Nhập giá khuyến mãi" [value]="cart.product.discount" readonly>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-username">Đơn giá</label>
+                  <input type="number" id="price" name="price" class="form-control" placeholder="Nhập đơn giá" [value]="cart.product.price" readonly>
+                </div>
+              </div>
+            </div>
+          </div>
+          
               <div class="row" >
                 <div class="col-lg-3">
                   <div class="form-group">
